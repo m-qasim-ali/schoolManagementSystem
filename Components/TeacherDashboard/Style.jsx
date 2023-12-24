@@ -6,12 +6,12 @@ const myStyle = StyleSheet.create({
     width: '100%',
   },
   View1: {
-    flex: 2,
+    height: 250,
     width: '110%',
     backgroundColor: '#28C2A0',
     borderRadius: 350,
     position: 'relative',
-    top: -120,
+    top: -100,
     left: -15,
   },
   View1_1: {
@@ -31,8 +31,7 @@ const myStyle = StyleSheet.create({
     height: 150,
   },
   View2: {
-    flex: 3,
-    top: -40,
+    flex: 1,
     width: '100%',
     gap: 13,
   },
@@ -59,11 +58,11 @@ const myStyle = StyleSheet.create({
   },
   View2_2: {
     flexWrap: 'wrap',
+    height: 400,
     width: '90%',
     alignSelf: 'center',
     flexDirection: 'row',
     gap: 15,
-    justifyContent: 'center',
   },
   View2_2_1: {
     padding: 15,
