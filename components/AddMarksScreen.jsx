@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 
 const AddMarksScreen = () => {
   const [students, setStudents] = useState([
@@ -36,6 +43,24 @@ const AddMarksScreen = () => {
             '/' +
             timeStamp.getFullYear()}
         </Text>
+      </View>
+
+      <View style={{marginBottom: 10, flexDirection: 'row-reverse'}}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#0C46C4',
+            opacity: 0.7,
+            width: '30%',
+            borderRadius: 5,
+            marginRight: 30,
+          }}
+          onPress={() => {
+            console.log('Submit Button');
+          }}>
+          <Text style={[styles.stdNameAndMarksText, {textAlign: 'center'}]}>
+            Submit
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.stdNameAndMarksView}>
@@ -77,7 +102,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    marginBottom: 10,
   },
   classAndDateHeaderText: {
     color: 'white',
