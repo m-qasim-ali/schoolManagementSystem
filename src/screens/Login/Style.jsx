@@ -6,7 +6,7 @@ const myStyle = StyleSheet.create({
     width: '100%',
   },
   View1: {
-    flex: 2,
+    height: 300,
     width: '110%',
     backgroundColor: '#28C2A0',
     borderRadius: 350,
@@ -30,18 +30,14 @@ const myStyle = StyleSheet.create({
     height: 150,
   },
   View2: {
-    flex: 3,
+    flex: 1,
     width: '100%',
   },
   View2_1: {
     flex: 1,
     width: '80%',
     alignSelf: 'center',
-    gap: 30,
-  },
-  View: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    gap: 15,
   },
   View2_1_1: {
     display: 'flex',
@@ -54,16 +50,13 @@ const myStyle = StyleSheet.create({
   Textinput: {
     width: '90%',
     margin: 0,
-    padding: 7,
-  },
-  text: {
-    fontSize: 13,
   },
   View2_2: {
     flex: 1,
-    width: '100%',
+    width: '80%',
     alignSelf: 'center',
     gap: 15,
+    marginTop: 10,
   },
   touchable1: {
     width: '100%',
@@ -72,10 +65,30 @@ const myStyle = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
   },
+  View_2_2_1: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 2,
+  },
+  touchable2_1Text: {
+    alignSelf: 'center',
+    fontSize: 15,
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
   touchable1Text: {
     color: 'white',
     alignSelf: 'center',
     fontSize: 20,
+  },
+  touchable2_2Text: {
+    alignSelf: 'center',
+    fontSize: 15,
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: '#0C46C4',
   },
 });
 export default myStyle;

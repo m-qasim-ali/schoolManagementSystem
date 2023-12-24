@@ -6,7 +6,7 @@ const myStyle = StyleSheet.create({
     width: '100%',
   },
   View1: {
-    flex: 2,
+    height: 300,
     width: '110%',
     backgroundColor: '#28C2A0',
     borderRadius: 350,
@@ -30,7 +30,7 @@ const myStyle = StyleSheet.create({
     height: 150,
   },
   View2: {
-    flex: 3,
+    flex: 1,
     width: '100%',
   },
   View2_1: {
@@ -56,6 +56,7 @@ const myStyle = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
     gap: 15,
+    marginTop: 10,
   },
   touchable1: {
     width: '100%',

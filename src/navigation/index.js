@@ -9,17 +9,25 @@ import AuthNavigator from './AuthNavigator';
 // firebase auth
 import auth from '@react-native-firebase/auth';
 import {Text, View} from 'react-native';
+import {selectUser} from '../store/userSlice';
+import {useSelector} from 'react-redux';
 
 export default AppContainer = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const data = useSelector(selectUser);
 
   function onAuthStateChanged(user) {
-    setUser(user);
+    setUser(data);
     if (initializing) setInitializing(false);
   }
 
-  // if (initializing) return null;
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, [data]);
+
+  if (initializing) return null;
 
   return (
     <NavigationContainer>

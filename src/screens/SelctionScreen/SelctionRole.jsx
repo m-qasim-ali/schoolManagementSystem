@@ -1,19 +1,13 @@
-import {
-
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
 import myStyle from './Style';
-const SelctionRole = (props) => {
+const SelctionRole = props => {
   return (
     <View style={myStyle.mainView}>
       <View style={myStyle.View1}>
         <View style={myStyle.View1_1}>
           <Image
             style={myStyle.Image}
-            source={require('../../Assests/Images/MainLogo.png')}
+            source={require('./../../../Assests/images/MainLogo.png')}
           />
         </View>
       </View>
@@ -23,10 +17,12 @@ const SelctionRole = (props) => {
           <TouchableOpacity
             style={myStyle.touchable1}
             onPress={() =>
-              props.navigation.navigate('Login', {role: 'student'}) 
+              props.navigation.navigate('Login', {role: 'student'})
             }>
             <View style={myStyle.touchView}>
-              <Image source={require('../../Assests/Images/StudentMale.png')} />
+              <Image
+                source={require('./../../../Assests/images/StudentMale.png')}
+              />
             </View>
             <Text style={myStyle.touchText}>Student</Text>
           </TouchableOpacity>
@@ -36,7 +32,9 @@ const SelctionRole = (props) => {
               props.navigation.navigate('Login', {role: 'teacher'})
             }>
             <View style={myStyle.touchView}>
-              <Image source={require('../../Assests/Images/Tuition.png')} />
+              <Image
+                source={require('./../../../Assests/images/Tuition.png')}
+              />
             </View>
             <Text style={myStyle.touchText}>Teacher</Text>
           </TouchableOpacity>
@@ -44,7 +42,7 @@ const SelctionRole = (props) => {
             style={myStyle.touchable1}
             onPress={() => props.navigation.navigate('Login', {role: 'guest'})}>
             <View style={myStyle.touchView}>
-              <Image source={require('../../Assests/Images/Person.png')} />
+              <Image source={require('./../../../Assests/images/Person.png')} />
             </View>
             <Text style={myStyle.touchText}>Guest</Text>
           </TouchableOpacity>

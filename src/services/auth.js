@@ -2,15 +2,74 @@ import auth from '@react-native-firebase/auth';
 import {Alert} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
-const createUserInDb = (uid, fullName, email) => {
-  return firestore().collection('users').doc(uid).set({
-    uid,
-    fullName,
-    email,
-  });
+const createTeacherInDb = (uid, fullName, email, role, cls) => {
+  return firestore().collection('teachers').doc(uid).set(
+    {
+      uid,
+      fullName,
+      email,
+      role,
+      cls,
+    },
+    {
+      merge: true,
+    },
+  );
 };
 
-const signUp = async (fullName, email, password) => {
+const createGuestInDb = (uid, fullName, email, role, cls) => {
+  return firestore().collection('guests').doc(uid).set(
+    {
+      uid,
+      fullName,
+      email,
+      role,
+    },
+    {
+      merge: true,
+    },
+  );
+};
+
+// const signUp = async (fullName, email, password) => {
+//   if (!fullName || !email || !password) {
+//     Alert.alert('Error', 'Please enter all fields');
+//   }
+
+//   try {
+//     const cred = await auth().createUserWithEmailAndPassword(email, password);
+//     const {uid} = cred.user;
+
+//     auth().currentUser.updateProfile({
+//       displayName: fullName,
+//     });
+//     const uid_1 = uid;
+//     await createUserInDb(uid_1, fullName, email);
+//   } catch (err) {
+//     return Alert.alert(err.code, err.message);
+//   }
+// };
+
+const registerTeacher = async (fullName, email, password, cls) => {
+  if (!fullName || !email || !password || !cls) {
+    Alert.alert('Error', 'Please enter all fields');
+  }
+
+  try {
+    const cred = await auth().createUserWithEmailAndPassword(email, password);
+    const {uid} = cred.user;
+
+    auth().currentUser.updateProfile({
+      displayName: fullName,
+    });
+    const uid_1 = uid;
+    await createTeacherInDb(uid_1, fullName, email, 'teacher', cls);
+  } catch (err) {
+    return Alert.alert(err.code, err.message);
+  }
+};
+
+const registerGuest = async (fullName, email, password) => {
   if (!fullName || !email || !password) {
     Alert.alert('Error', 'Please enter all fields');
   }
@@ -23,30 +82,99 @@ const signUp = async (fullName, email, password) => {
       displayName: fullName,
     });
     const uid_1 = uid;
-    await createUserInDb(uid_1, fullName, email);
+    await createGuestInDb(uid_1, fullName, email, 'guest');
   } catch (err) {
     return Alert.alert(err.code, err.message);
   }
 };
 
-const signIn = async (email, password) => {
+// const signIn = async (email, password) => {
+//   if (!email || !password) {
+//     Alert.alert('Error', 'Please enter all fields');
+//   }
+
+//   try {
+//     await auth().signInWithEmailAndPassword(email, password);
+//   } catch (err) {
+//     return Alert.alert(err.code, err.message);
+//   }
+// };
+
+const signInTeacher = async (email, password) => {
   if (!email || !password) {
     Alert.alert('Error', 'Please enter all fields');
   }
 
   try {
-    await auth().signInWithEmailAndPassword(email, password);
+    const res = await auth().signInWithEmailAndPassword(email, password);
+    const userUid = res.user.uid;
+
+    const userDoc = await firestore().collection('teachers').doc(userUid).get();
+    console.log(userDoc);
+
+    if (!(userDoc.exists && userDoc.data().role == 'teacher')) {
+      throw error('Invalid credientials');
+    }
+
+    return userDoc.data();
   } catch (err) {
-    return Alert.alert(err.code, err.message);
+    throw err;
   }
 };
 
-const forgetPassword = email => {
+const signInGuest = async (email, password) => {
+  if (!email || !password) {
+    Alert.alert('Error', 'Please enter all fields');
+  }
+
+  try {
+    const res = await auth().signInWithEmailAndPassword(email, password);
+    const userUid = res.user.uid;
+
+    const userDoc = await firestore().collection('guests').doc(userUid).get();
+
+    if (!(userDoc.exists && userDoc.data().role == 'guest')) {
+      throw error('Invalid credientials');
+    }
+
+    return userDoc.data();
+  } catch (err) {
+    throw err;
+  }
+};
+
+const signInStudent = async (email, password) => {
+  if (!email || !password) {
+    Alert.alert('Error', 'Please enter all fields');
+  }
+
+  try {
+    const res = await auth().signInWithEmailAndPassword(email, password);
+
+    const userUid = res.user.uid;
+
+    const userDoc = await firestore().collection('students').doc(userUid).get();
+
+    if (!(userDoc.exists && userDoc.data().role == 'student')) {
+      throw error('Invalid credientials');
+    }
+
+    return userDoc.data();
+  } catch (err) {
+    throw err;
+  }
+};
+
+const forgetPassword = async email => {
   if (!email) {
     Alert.alert('Error', 'Please enter email');
   }
 
-  return auth().sendPasswordResetEmail(email);
+  try {
+    await auth().sendPasswordResetEmail(email);
+  } catch (err) {
+    throw err;
+  }
 };
 
 const signOut = () => {
@@ -54,8 +182,11 @@ const signOut = () => {
 };
 
 const Auth = {
-  signUp,
-  signIn,
+  registerGuest,
+  registerTeacher,
+  signInTeacher,
+  signInGuest,
+  signInStudent,
   forgetPassword,
   signOut,
 };
