@@ -5,6 +5,7 @@ import Main from './Components/Main/Main';
 import SelctionRole from './Components/SelctionScreen/SelctionRole';
 import Login from './Components/Login/Login';
 import SignUp from './Components/SignUp/SignUp';
+import TeacherDashboard from './Components/TeacherDashboard/TeacherDashboard';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -36,6 +37,13 @@ function App() {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TeacherDashboard"
+          component={TeacherDashboard}
           options={{
             headerShown: false,
           }}
