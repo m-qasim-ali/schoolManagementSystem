@@ -5,12 +5,14 @@ import {StyleSheet, View, Image} from 'react-native';
 import ResultScreen from './components/ResultScreen';
 import AttendanceScreen from './components/AttendanceScreen';
 
+import AddMarksScreen from './components/AddMarksScreen';
+
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="AddMarksTeacherScreen">
+      <Stack.Navigator initialRouteName="AddMarksScreen">
         <Stack.Screen
           name="HomeWorkScreen"
           component={HomeWorkScreen}
@@ -59,6 +61,27 @@ function App() {
           component={AttendanceScreen}
           options={{
             title: 'ATTENDANCE',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./assets/images/Exam.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AddMarksScreen"
+          component={AddMarksScreen}
+          options={{
+            title: 'ADD MARKS',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
                 <Image source={require('./assets/images/Exam.png')} />
