@@ -2,11 +2,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
 
-import TeacherDashboard from './Components/TeacherDashboard/TeacherDashboard';
+
 import Main from './src/Components/Main/Main';
 import SelctionRole from './src/Components/SelctionScreen/SelctionRole';
 import Login from './src/Components/Login/Login';
 import SignUp from './src/Components/SignUp/SignUp';
+import TeacherDashboard from './src/Components/TeacherDashboard/TeacherDashboard';
 const Stack = createNativeStackNavigator();
 
 function App() {
