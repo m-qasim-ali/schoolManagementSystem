@@ -1,12 +1,20 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function HomeScreen() {
+  const [homeWork, setHomeWork] = React.useState('');
   return (
     <View style={Styles.parentView}>
       <View style={Styles.questionDescriptionSection}>
@@ -23,7 +31,25 @@ function HomeScreen() {
       </View>
 
       <View style={Styles.questionMaterialSection}>
-        <Text>Related Description text Here</Text>
+        <Text style={Styles.subjectText}>Subject Name Here</Text>
+
+        <View>
+          <Text>Add Homework</Text>
+
+          <TextInput
+            style={Styles.homeWorkInputFiled}
+            onChangeText={setHomeWork}></TextInput>
+        </View>
+
+        <TouchableOpacity
+          style={Styles.submitButtonOpacity}
+          onPress={() => {
+            console.log(homeWork);
+          }}>
+          <Text style={Styles.submitText}>Submit</Text>
+        </TouchableOpacity>
+
+        <Text style={Styles.fileStatuesText}>File is Uploaded sucessfully</Text>
       </View>
     </View>
   );
@@ -73,16 +99,41 @@ const Styles = StyleSheet.create({
     marginRight: 10,
   },
   questionDescriptionSection: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
   },
   questionMaterialSection: {
-    flex: 2,
+    flex: 3,
+    gap: 40,
   },
   questionTittle: {
     fontWeight: '900',
     fontSize: 15,
     color: 'black',
+  },
+  subjectText: {
+    color: '#0C46C4',
+    fontWeight: '900',
+  },
+  submitButtonOpacity: {
+    alignSelf: 'center',
+    backgroundColor: '#0C46C4',
+    width: '80%',
+    padding: 15,
+    borderRadius: 10,
+  },
+  submitText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+  homeWorkInputFiled: {
+    height: 50,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  fileStatuesText: {
+    textAlign: 'center',
   },
 });
 
