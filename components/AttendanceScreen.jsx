@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const AttendanceScreen = props => {
+const AttendanceScreen = () => {
   const [students, setStudents] = useState([
     {id: 1, name: 'Student 1', present: false, absent: false},
     {id: 2, name: 'Student 2', present: false, absent: false},
@@ -23,26 +23,22 @@ const AttendanceScreen = props => {
     {id: 12, name: 'Student 12', present: false, absent: false},
   ]);
 
-  const timeStamp = new Date(Date.now());
-
   const handleToggleAttendance = (studentId, attendanceType) => {
     setStudents(prevStudents =>
       prevStudents.map(student => {
         if (student.id === studentId) {
           return {
             ...student,
-            present: attendanceType === 'present',
-            absent: attendanceType === 'absent',
+            [attendanceType]: !student[attendanceType],
+            [attendanceType === 'present' ? 'absent' : 'present']: false,
           };
         }
-        return {
-          ...student,
-          present: false,
-          absent: false,
-        };
+        return student;
       }),
     );
   };
+
+  const timeStamp = new Date(Date.now());
 
   return (
     <View style={styles.parentView}>
@@ -52,7 +48,7 @@ const AttendanceScreen = props => {
           Date:{' '}
           {timeStamp.getDate() +
             '/' +
-            timeStamp.getMonth() +
+            (timeStamp.getMonth() + 1) +
             '/' +
             timeStamp.getFullYear()}
         </Text>
@@ -60,7 +56,7 @@ const AttendanceScreen = props => {
 
       <View style={styles.attendanceSectionView}>
         <View style={styles.studentNameView}>
-          <Text style={styles.subBarText}>Student Name</Text>
+          <Text style={[styles.subBarText, {marginLeft: 6}]}>Student Name</Text>
         </View>
         <View style={styles.presentAndAbsentView}>
           <Text style={styles.subBarText}>Present</Text>
@@ -89,7 +85,7 @@ const AttendanceScreen = props => {
                   style={[
                     styles.checkbox,
                     student.absent
-                      ? styles.absenrSelectedCheckbox
+                      ? styles.absentSelectedCheckbox
                       : styles.checkbox,
                   ]}
                   onPress={() => handleToggleAttendance(student.id, 'absent')}
@@ -162,7 +158,7 @@ const styles = StyleSheet.create({
   presentSelectedCheckbox: {
     backgroundColor: 'green',
   },
-  absenrSelectedCheckbox: {
+  absentSelectedCheckbox: {
     backgroundColor: 'red',
   },
 });

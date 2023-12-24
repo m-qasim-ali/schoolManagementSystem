@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="AddMarksScreen">
+      <Stack.Navigator initialRouteName="AttendanceScreen">
         <Stack.Screen
           name="HomeWorkScreen"
           component={HomeWorkScreen}
@@ -57,7 +57,7 @@ function App() {
         />
 
         <Stack.Screen
-          name="AddMarksTeacherScreen"
+          name="AttendanceScreen"
           component={AttendanceScreen}
           options={{
             title: 'ATTENDANCE',
