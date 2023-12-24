@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-function HomeScreen() {
+function HomeWorkScreen() {
   const [homeWork, setHomeWork] = React.useState('');
   const [subjectName, setSubjectName] = React.useState('Subject Name');
   const [className, setClassName] = React.useState('BCS-6B');
@@ -129,4 +129,4 @@ const Styles = StyleSheet.create({
     fontWeight: '900',
   },
 });
-export default HomeScreen;
+export default HomeWorkScreen;

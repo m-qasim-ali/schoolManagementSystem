@@ -1,21 +1,67 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from './components/HomeWorkScreen';
+import HomeWorkScreen from './components/HomeWorkScreen';
 import {StyleSheet, View, Image} from 'react-native';
+import ResultScreen from './components/ResultScreen';
+import AttendanceScreen from './components/AttendanceScreen';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="AddMarksTeacherScreen">
         <Stack.Screen
-          name="HOMEWORK"
-          component={HomeScreen}
+          name="HomeWorkScreen"
+          component={HomeWorkScreen}
           options={{
+            title: 'Home Screen',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
                 <Image source={require('./assets/images/homeIcon.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="ResultScreen"
+          component={ResultScreen}
+          options={{
+            title: 'RESULT',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./assets/images/Exam.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="AddMarksTeacherScreen"
+          component={AttendanceScreen}
+          options={{
+            title: 'ATTENDANCE',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./assets/images/Exam.png')} />
               </View>
             ),
             headerStyle: {
