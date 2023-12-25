@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {GoogleSignin} from '@react-native-community/google-signin';
 
 // import navigators
-import AppNavigator from './AppNavigator';
+import AppNavigatorTeacher from './AppNavigatorTeacher';
+import AppNavigatorStudent from './AppNavigatorStudent';
+import AppNavigatorGuest from './AppNavigatorGuest';
 import AuthNavigator from './AuthNavigator';
 
 // firebase auth
@@ -31,7 +32,15 @@ export default AppContainer = () => {
 
   return (
     <NavigationContainer>
-      {user ? <AppNavigator /> : <AuthNavigator />}
+      {!user ? (
+        <AuthNavigator />
+      ) : user.role == 'teacher' ? (
+        <AppNavigatorTeacher />
+      ) : user.role == 'student' ? (
+        <AppNavigatorStudent />
+      ) : (
+        <AppNavigatorGuest />
+      )}
     </NavigationContainer>
   );
 };

@@ -27,11 +27,13 @@ const myStyle = StyleSheet.create({
   },
   Image: {
     alignSelf: 'center',
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
+    overflow: 'hidden',
   },
   View2: {gap: 20},
   View2_1: {flex: 1, alignSelf: 'center', width: '90%', gap: 10},
   textInput: {borderWidth: 1, borderColor: '#0C46C4', borderRadius: 5},
 });
-export default myStyle
+export default myStyle;

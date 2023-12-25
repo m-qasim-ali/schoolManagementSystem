@@ -4,7 +4,7 @@ import AppContainer from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
 import {PaperProvider} from 'react-native-paper';
-import {AddStudent} from './src/screens';
+import {AddStudent, StudentDashboard} from './src/screens';
 
 function App() {
   return (
@@ -14,8 +14,7 @@ function App() {
           <AppContainer />
         </PaperProvider>
       </Provider> */}
-      {/* <Text>Hello</Text> */}
-      <AddStudent />
+      <StudentDashboard />
     </>
   );
 }

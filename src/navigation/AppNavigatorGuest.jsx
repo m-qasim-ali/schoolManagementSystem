@@ -1,10 +1,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, TeacherDashboard} from '../screens';
+import {AddStudent, Home, TeacherDashboard} from '../screens';
 
 const Stack = createStackNavigator();
 
-export default AppNavigator = () => (
+export default AppNavigatorStudent = () => (
   <Stack.Navigator
     screenOptions={{
       headerShown: null,
@@ -12,13 +12,6 @@ export default AppNavigator = () => (
     <Stack.Screen
       name="TeacherDashboard"
       component={TeacherDashboard}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <Stack.Screen
-      name="Home"
-      component={Home}
       options={{
         headerShown: false,
       }}
