@@ -41,7 +41,7 @@ const NoticeAndEvent = () => {
       <KeyboardAvoidingView
         style={styles.parentView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -150} // Adjust as needed
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -50} // Adjust as needed
       >
         <View style={styles.textAndDetailsView}>
           <Text style={styles.screenText}>Notice Title</Text>
@@ -69,21 +69,23 @@ const NoticeAndEvent = () => {
             value={noticeDetails.noticeDetail}
           />
 
-          <TouchableOpacity
-            style={[styles.uploadImageButtonOpacity, {marginTop: 15}]}
-            onPress={selectImage}>
-            <Text style={styles.sendButtonText}>Upload Image</Text>
-          </TouchableOpacity>
+          <View style={styles.uploadImageContainer}>
+            <TouchableOpacity
+              style={styles.uploadImageButtonOpacity}
+              onPress={selectImage}>
+              <Text style={styles.sendButtonText}>Upload Image</Text>
+            </TouchableOpacity>
 
-          {noticeDetails.selectedImage && (
-            <View style={{marginTop: 20}}>
-              <Text style={styles.screenText}>Selected Image:</Text>
-              <Image
-                source={{uri: noticeDetails.selectedImage}}
-                style={{width: 150, height: 150}}
-              />
-            </View>
-          )}
+            {noticeDetails.selectedImage && (
+              <View style={styles.selectedImageContainer}>
+                <Text style={styles.screenText}>Selected Image</Text>
+                <Image
+                  source={{uri: noticeDetails.selectedImage}}
+                  style={styles.selectedImage}
+                />
+              </View>
+            )}
+          </View>
         </View>
         <View style={styles.bottomMostView}>
           <TouchableOpacity
@@ -104,7 +106,6 @@ export default NoticeAndEvent;
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-    marginBottom: 30,
   },
   parentView: {
     flex: 1,
@@ -137,6 +138,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
   },
+  uploadImageContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   uploadImageButtonOpacity: {
     backgroundColor: '#0C46C4',
     borderRadius: 10,
@@ -150,5 +157,14 @@ const styles = StyleSheet.create({
   screenText: {
     color: '#0C46C4',
     fontWeight: '900',
+  },
+  selectedImageContainer: {
+    marginLeft: 10,
+  },
+  selectedImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginLeft: 30,
   },
 });
