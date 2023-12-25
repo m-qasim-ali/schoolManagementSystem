@@ -16,8 +16,17 @@ const HomeWorkStudentScreen = () => {
       'veritatis hic quod quibusdam reprehenderit, cupiditate voluptatem' +
       'quo accusantium accusamus tempora nam suscipit ducimus vero.' +
       'Commodi, possimus. Est veniam sequi molestias ad quisquam, unde a' +
+      'rerum enim maxime officia aspernatur quae atque.' +
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem' +
+      'aliquid dolor magnam incidunt ad vitae animi, delectus aperiam' +
+      'veritatis hic quod quibusdam reprehenderit, cupiditate voluptatem' +
+      'quo accusantium accusamus tempora nam suscipit ducimus vero.' +
+      'Commodi, possimus. Est veniam sequi molestias ad quisquam, unde a' +
       'rerum enim maxime officia aspernatur quae atque.',
   });
+  const handleDownloadLink = () => {
+    console.log('Link is Clicked');
+  };
   const handleDownloadHomeWork = () => {
     console.log('Button is Clicked');
   };
@@ -25,7 +34,9 @@ const HomeWorkStudentScreen = () => {
     <View style={styles.parentView}>
       <View style={{gap: 20, padding: 10}}>
         <View>
-          <Text style={styles.screenText}>{myState.questionLink}</Text>
+          <TouchableOpacity onPress={handleDownloadLink}>
+            <Text style={styles.screenText}>{myState.questionLink}</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.card}>
