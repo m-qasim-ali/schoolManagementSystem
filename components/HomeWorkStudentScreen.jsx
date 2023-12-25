@@ -18,6 +18,9 @@ const HomeWorkStudentScreen = () => {
       'Commodi, possimus. Est veniam sequi molestias ad quisquam, unde a' +
       'rerum enim maxime officia aspernatur quae atque.',
   });
+  const handleDownloadHomeWork = () => {
+    console.log('Button is Clicked');
+  };
   return (
     <View style={styles.parentView}>
       <View style={{gap: 20, padding: 10}}>
@@ -33,9 +36,9 @@ const HomeWorkStudentScreen = () => {
           <TouchableOpacity
             style={styles.sendButtonOpacity}
             onPress={() => {
-              console.log('Button is clicked');
+              handleDownloadHomeWork();
             }}>
-            <Text style={styles.sendButtonText}>Send</Text>
+            <Text style={styles.sendButtonText}>Download HomeWork</Text>
           </TouchableOpacity>
         </View>
       </View>
