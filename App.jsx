@@ -21,7 +21,7 @@ function App() {
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={'#28C2A0'} />
-      <Stack.Navigator initialRouteName="TeacherDashboard">
+      <Stack.Navigator initialRouteName="Main">
         <Stack.Screen
           name="Main"
           component={Main}

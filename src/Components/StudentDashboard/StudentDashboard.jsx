@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const TeacherDashboard = props => {
+const StudentDashboard = props => {
   const [uri, setUri] = useState('icon');
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
@@ -179,4 +179,4 @@ const TeacherDashboard = props => {
   );
 };
 
-export default TeacherDashboard;
+export default StudentDashboard;
