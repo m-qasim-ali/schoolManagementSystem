@@ -8,13 +8,14 @@ import AttendanceScreen from './components/AttendanceScreen';
 import AddMarksScreen from './components/AddMarksScreen';
 import NoticeAndEvent from './components/NoticeAndEvents';
 import SolutionsScreen from './components/SolutionsScreen';
+import HomeWorkStudentScreen from './components/HomeWorkStudentScreen';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SolutionsScreen">
+      <Stack.Navigator initialRouteName="HomeWorkStudentScreen">
         <Stack.Screen
           name="HomeWorkScreen"
           component={HomeWorkScreen}
@@ -130,6 +131,27 @@ function App() {
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
                 <Image source={require('./assets/images/solutions.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="HomeWorkStudentScreen"
+          component={HomeWorkStudentScreen}
+          options={{
+            title: 'HOMEWORK',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./assets/images/homeIcon.png')} />
               </View>
             ),
             headerStyle: {
