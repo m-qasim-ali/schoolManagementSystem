@@ -8,6 +8,7 @@ import SignUp from './src/Components/SignUp/SignUp';
 import TeacherDashboard from './src/Components/TeacherDashboard/TeacherDashboard';
 import AddStudent from './src/Components/AddStudent/AddStudent';
 import MyDrawer from './src/Components/myDrawer/myDrawer';
+import ResultDescription from './src/Components/resultDescription/result_description';
 const Stack = createNativeStackNavigator();
 function App() {
   return (
@@ -59,6 +60,13 @@ function App() {
         <Stack.Screen
           name="Drawer"
           component={MyDrawer}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="StudentRESULT"
+          component={ResultDescription}
           options={{
             headerShown: false,
           }}

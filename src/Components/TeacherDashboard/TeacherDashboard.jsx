@@ -9,22 +9,34 @@ import {
   Modal,
   Alert,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import {RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const TeacherDashboard = props => {
   const [uri, setUri] = useState('icon');
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
-  const [data, setData] = useState({
-    class: '',
-    section: '',
-    subject: '',
-  });
+
   const [message, setMessage] = useState(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et do',
   );
+
+  const [open, setOpen] = useState(false);
+  const [classValue, setClassValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: '1A', value: '1A'},
+    {label: '1B', value: '1B'},
+    {label: '2A', value: '2A'},
+    {label: '2B', value: '2B'},
+    {label: '3A', value: '3A'},
+    {label: '3B', value: '3B'},
+    {label: '4A', value: '4A'},
+    {label: '4B', value: '4B'},
+    {label: '5A', value: '5A'},
+    {label: '5B', value: '5B'},
+  ]);
 
   const modalDown = () => {
     setModalVisible(!modalVisible);
@@ -32,14 +44,12 @@ const TeacherDashboard = props => {
 
   const navigateTo = () => {
     console.log(_screen);
-    props.navigation.navigate(
-      {_screen},
-      {
-        classValue: data.class,
-        sectionValue: data.section,
-        subjectValue: data.subject,
-      },
-    );
+   props.navigation.navigate({
+     name: _screen,
+     params: {
+       class_value: classValue,
+     },
+   });
   };
 
   const modalOpen = screen => {
@@ -55,60 +65,58 @@ const TeacherDashboard = props => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={myStyle.centeredView}>
-          <View style={myStyle.modalView}>
-            <TextInput
-              style={myStyle.modalText}
-              onChangeText={text => setData({...data, subject: text})}
-              placeholder="Subject"
-            />
-            <TextInput
-              style={myStyle.modalText}
-              onChangeText={text => setData({...data, section: text})}
-              placeholder="Section"
-            />
-            <TextInput
-              style={myStyle.modalText}
-              onChangeText={text => setData({...data, class: text})}
-              placeholder="Class"
-            />
-            <TouchableOpacity
-              style={[myStyle.button, myStyle.buttonClose]}
-              onPress={() => {
-                modalDown();
-                navigateTo();
-              }}>
-              <Text style={myStyle.textStyle}>Submit</Text>
-            </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={modalDown}>
+          <View style={myStyle.centeredView}>
+            <TouchableWithoutFeedback>
+              <View style={myStyle.modalView}>
+                <DropDownPicker
+                  open={open}
+                  value={classValue}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setClassValue}
+                  setItems={setItems}
+                  placeholder={'Class'}
+                />
+                <TouchableOpacity
+                  style={[myStyle.button, myStyle.buttonClose]}
+                  onPress={() => {
+                    modalDown();
+                    navigateTo();
+                  }}>
+                  <Text style={myStyle.textStyle}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       <View style={myStyle.View1}>
         <View style={myStyle.View1_1}>
-          {uri === 'icon' ? (
-            <Icon name="happy-outline" size={120} color="grey" />
-          ) : (
-            <Image style={myStyle.Image} source={{uri: uri}} />
-          )}
+          <Image
+            style={myStyle.Image}
+            source={require('../../Assests/Images/teacher.jpeg')}
+          />
         </View>
       </View>
       <ScrollView>
         <View style={myStyle.View2}>
           <View style={myStyle.View2_1}>
-            <Text style={myStyle.Text2_11}>
-              Welcome Message
+            <View style={myStyle.welcomeHeader}>
+              <Text style={myStyle.Text2_11}>Welcome Message</Text>
               <Icon name="arrow-forward" color="white" size={20} />
-            </Text>
-            <Text style={myStyle.Text2_12}>The Standard Message</Text>
-            <Text style={myStyle.Text2_13}>{message}</Text>
+            </View>
+            <View style={{marginTop: 10}}>
+              <Text style={myStyle.Text2_12}>The Standard Message</Text>
+              <Text style={myStyle.Text2_13}>{message}</Text>
+            </View>
           </View>
 
           <View style={myStyle.View2_2}>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
                 onPress={() => modalOpen('Attendence')}>
@@ -119,7 +127,7 @@ const TeacherDashboard = props => {
               </TouchableOpacity>
               <Text style={myStyle.Text}>Attendece</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
                 onPress={() => modalOpen('HOMEWORK')}>
@@ -130,7 +138,7 @@ const TeacherDashboard = props => {
               </TouchableOpacity>
               <Text style={myStyle.Text}>Homework</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
                 onPress={() => modalOpen('RESULT')}>
@@ -141,7 +149,7 @@ const TeacherDashboard = props => {
               </TouchableOpacity>
               <Text style={myStyle.Text}>Result</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
@@ -150,7 +158,7 @@ const TeacherDashboard = props => {
               </TouchableOpacity>
               <Text style={myStyle.Text}>Exam Routine</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
@@ -159,7 +167,7 @@ const TeacherDashboard = props => {
               </TouchableOpacity>
               <Text style={myStyle.Text}>Solution</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
@@ -168,7 +176,7 @@ const TeacherDashboard = props => {
               </TouchableOpacity>
               <Text style={myStyle.Text}>Notice & Events</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={myStyle.box}>
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}

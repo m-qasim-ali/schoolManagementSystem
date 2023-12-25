@@ -18,11 +18,6 @@ const TeacherDashboard = props => {
   const [uri, setUri] = useState('icon');
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
-  const [data, setData] = useState({
-    class: '',
-    section: '',
-    subject: '',
-  });
   const [message, setMessage] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   );
@@ -46,14 +41,12 @@ const TeacherDashboard = props => {
 
   const navigateTo = () => {
     console.log(_screen);
-    props.navigation.navigate(
-      {_screen},
-      {
-        classValue: data.class,
-        sectionValue: data.section,
-        subjectValue: data.subject,
+    props.navigation.navigate({
+      name: _screen,
+      params: {
+        class_value: classValue,
       },
-    );
+    });
   };
 
   const modalOpen = screen => {
@@ -144,7 +137,7 @@ const TeacherDashboard = props => {
             <View style={{alignItems: 'center'}}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('RESULT')}>
+                onPress={() => modalOpen('StudentRESULT')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/Exam.png')}
