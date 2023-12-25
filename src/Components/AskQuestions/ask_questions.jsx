@@ -8,7 +8,7 @@ const AskQuestion = () => {
     <View style={{backgroundColor:'white', flex:1}}>
       <View style={styles.appBar}>
       <View style={{flexDirection:'row', columnGap:25}}>
-        <Image source={require('./assets/Exam.png')}></Image>
+        <Image source={require('../../Assests/Images/ExamW.png')}></Image>
         <Text style={styles.text}>ASK QUESTION</Text>
       </View>
       </View>

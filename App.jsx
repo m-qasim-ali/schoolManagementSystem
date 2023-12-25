@@ -16,6 +16,8 @@ import AttendanceScreen from './src/Components/AttendanceScreen/AttendanceScreen
 import AddMarksScreen from './src/Components/AddMarksScreen/AddMarksScreen';
 import NoticeAndEvent from './src/Components/NoticeAttendence/NoticeAndEvents';
 import SolutionsScreen from './src/Components/SolutionScreen/SolutionsScreen';
+import AskQuestion from './src/Components/AskQuestions/ask_questions';
+
 const Stack = createNativeStackNavigator();
 function App() {
   return (
@@ -71,14 +73,28 @@ function App() {
             headerShown: false,
           }}
         />
+
         <Stack.Screen
           name="StudentRESULT"
           component={ResultDescription}
           options={{
-            headerShown: false,
+            title: 'Result Screen',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./src/Assests/Images/ExamW.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
           }}
         />
-
         <Stack.Screen
           name="HomeWorkScreen"
           component={HomeWorkScreen}
@@ -214,6 +230,13 @@ function App() {
         <Stack.Screen
           name="addStudent"
           component={AddStudent}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="askQuestion"
+          component={AskQuestion}
           options={{
             headerShown: false,
           }}

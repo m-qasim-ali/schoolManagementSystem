@@ -7,22 +7,16 @@ const ResultDescription = (props) => {
   const [getDate, setDate] = useState('12/02/2023');
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={styles.appBar}>
-        <View style={{flexDirection: 'row', columnGap: 25}}>
-          <Image source={require('../../Assests/Images/ExamW.png')}></Image>
-          <Text style={styles.text}>Result</Text>
-        </View>
-      </View>
       <View style={styles.title}>
-        <View style={{flexDirection: 'row', columnGap: 170}}>
+        <View style={ { flexDirection: 'row', columnGap: 160, width: '100%',alignSelf:'center' } }>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontWeight: '900'}}>Term :</Text>
-            <Text>{getTerm}</Text>
+            <Text style={{fontWeight: '900', color: 'white'}}>Term :</Text>
+            <Text style={{color: 'white'}}>{getTerm}</Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontWeight: '900'}}>Date :</Text>
-            <Text>{getDate}</Text>
+            <Text style={{fontWeight: '900', color: 'white'}}>Date :</Text>
+            <Text style={{color: 'white'}}>{getDate}</Text>
           </View>
         </View>
       </View>

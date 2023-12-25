@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
-
 const StudentDashboard = props => {
   const [uri, setUri] = useState('icon');
   const [modalVisible, setModalVisible] = useState(false);
@@ -171,6 +170,12 @@ const StudentDashboard = props => {
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Notice & Events</Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+                <Icon name="exit" size={50} color="#0C46C4" />
+              </TouchableOpacity>
+              <Text style={myStyle.Text}>Logout</Text>
             </View>
           </View>
         </View>
