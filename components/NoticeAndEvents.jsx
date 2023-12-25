@@ -8,21 +8,34 @@ import {
 } from 'react-native';
 
 const NoticeAndEvent = () => {
-  const [noticeDetails, setNoticeDetails] = React.useState(
-    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer',
-  );
+  const [noticeDetails, setNoticeDetails] = React.useState({
+    noticeTitle: 'Terminal Date Sheet',
+    noticeDetail:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' +
+      'Vestibulum tristique justo eget risus auctor, nec tristique nunc varius' +
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' +
+      'Vestibulum tristique justo eget risus auctor, nec tristique nunc varius',
+  });
 
   return (
     <View style={styles.parentView}>
       <View style={styles.textAndDetailsView}>
-        <Text style={{marginBottom: 10}}>Enter Details</Text>
+        <Text style={styles.screenText}>Notice Title</Text>
+        <TextInput
+          style={styles.noticeTitleInputField}
+          onChangeText={title => {
+            setNoticeDetails(prevState => ({...prevState, noticeTitle: title}));
+          }}
+          value={noticeDetails.noticeTitle}
+        />
+        <Text style={styles.screenText}>Enter Details</Text>
         <TextInput
           style={styles.detailsInputFiled}
           multiline={true}
           onChangeText={text => {
-            setNoticeDetails(text);
+            setNoticeDetails(prevState => ({...prevState, noticeDetail: text}));
           }}
-          value={noticeDetails}
+          value={noticeDetails.noticeDetail}
         />
 
         <TouchableOpacity
@@ -54,7 +67,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 10,
   },
-
   textAndDetailsView: {
     flex: 3,
     justifyContent: 'center',
@@ -85,5 +97,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#0C46C4',
     borderRadius: 10,
     width: '40%',
+  },
+  noticeTitleInputField: {
+    borderWidth: 1,
+    marginBottom: 20,
+    borderColor: '#0C46C4',
+    paddingHorizontal: 10,
+  },
+  screenText: {
+    color: '#0C46C4',
+    fontWeight: '900',
   },
 });
