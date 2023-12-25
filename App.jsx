@@ -7,12 +7,13 @@ import Login from './src/Components/Login/Login';
 import SignUp from './src/Components/SignUp/SignUp';
 import TeacherDashboard from './src/Components/TeacherDashboard/TeacherDashboard';
 import AddStudent from './src/Components/AddStudent/AddStudent';
+import MyDrawer from './src/Components/myDrawer/myDrawer';
 const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={'#28C2A0'} />
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Drawer">
         <Stack.Screen
           name="Main"
           component={Main}
@@ -55,8 +56,16 @@ function App() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="Drawer"
+          component={MyDrawer}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 export default App;
+
