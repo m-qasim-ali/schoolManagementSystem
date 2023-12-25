@@ -17,7 +17,7 @@ const createTeacherInDb = (uid, fullName, email, role, cls) => {
   );
 };
 
-const createGuestInDb = (uid, fullName, email, role, cls) => {
+const createGuestInDb = (uid, fullName, email, role) => {
   return firestore().collection('guests').doc(uid).set(
     {
       uid,
@@ -122,6 +122,25 @@ const signInTeacher = async (email, password) => {
   }
 };
 
+const getAllClasses = async () => {
+  try {
+    const querySnapshot = await firestore().collection('teachers').get();
+
+    const classList = [];
+
+    querySnapshot.forEach(doc => {
+      // Get data from each document and add it to the list
+      const classData = doc.data().cls;
+      classList.push(classData);
+    });
+
+    console.log('All teachers:', classList);
+    return classList;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const signInGuest = async (email, password) => {
   if (!email || !password) {
     Alert.alert('Error', 'Please enter all fields');
@@ -189,6 +208,7 @@ const Auth = {
   signInStudent,
   forgetPassword,
   signOut,
+  getAllClasses,
 };
 
 export default Auth;

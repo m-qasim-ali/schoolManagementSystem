@@ -31,13 +31,12 @@ const myStyle = StyleSheet.create({
   },
   View2: {
     width: '100%',
-    flex: 1,
+    gap: 20,
   },
   View2_1: {
-    flex: 1,
     width: '80%',
     alignSelf: 'center',
-    gap: 30,
+    gap: 10,
   },
   View: {
     flexDirection: 'row',
@@ -76,6 +75,10 @@ const myStyle = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     fontSize: 20,
+  },
+  selection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 export default myStyle;

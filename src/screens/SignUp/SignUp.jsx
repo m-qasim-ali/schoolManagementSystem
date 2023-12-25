@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import myStyle from './Style';
 import {
   View,
@@ -12,6 +12,7 @@ import {
 import {RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Auth} from '../../services';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const SignUp = props => {
   const {role: Role} = props.route.params;
@@ -20,16 +21,46 @@ const SignUp = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [cls, setCls] = useState('4');
+  const [open, setOpen] = useState(false);
+  const [classValue, setClassValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: '1A', value: '1A'},
+    {label: '1B', value: '1B'},
+    {label: '2A', value: '2A'},
+    {label: '2B', value: '2B'},
+    {label: '3A', value: '3A'},
+    {label: '3B', value: '3B'},
+    {label: '4A', value: '4A'},
+    {label: '4B', value: '4B'},
+    {label: '5A', value: '5A'},
+    {label: '5B', value: '5B'},
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const classes = await Auth.getAllClasses();
+        setItems(prev => prev.filter(item => !classes.includes(item.label)));
+      } catch (error) {
+        Alert.alert('Error', error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = async () => {
-    if (username.length == 0 || password.length == 0 || email.length == 0) {
+    if (
+      username.length == 0 ||
+      password.length == 0 ||
+      email.length == 0 ||
+      classValue == null
+    ) {
       Alert.alert('Required', 'All fields are required!');
     } else {
       setLoading(true);
-      console.log(username);
       if (role == 'teacher') {
-        await Auth.registerTeacher(username, email, password, cls);
+        await Auth.registerTeacher(username, email, password, classValue);
       } else {
         await Auth.registerGuest(username, email, password);
       }
@@ -102,30 +133,31 @@ const SignUp = props => {
                 />
               </View>
             </View>
-            {role == 'teacher' && (
-              <View>
-                <Text style={myStyle.text}>Enter Class</Text>
-                <View style={myStyle.View2_1_1}>
-                  <TextInput
-                    style={myStyle.Textinput}
-                    placeholder="3"
-                    onChangeText={text => setCls(text)}></TextInput>
-                  <Icon name="puzzle-piece" size={25} color="#0C46C4" />
-                </View>
-              </View>
-            )}
-            <View style={myStyle.View2_2}>
-              <TouchableOpacity
-                disabled={loading}
-                style={myStyle.touchable1}
-                onPress={handleSubmit}>
-                <Text style={myStyle.touchable1Text}>
-                  {loading ? 'Registering...' : 'Register'}
-                </Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
+        <View style={myStyle.View2_1}>
+          {role == 'teacher' && (
+            <View>
+              <DropDownPicker
+                open={open}
+                value={classValue}
+                items={items}
+                setOpen={setOpen}
+                setValue={setClassValue}
+                setItems={setItems}
+                placeholder={'Class'}
+              />
+            </View>
+          )}
+            <TouchableOpacity
+              disabled={loading}
+              style={myStyle.touchable1}
+              onPress={handleSubmit}>
+              <Text style={myStyle.touchable1Text}>
+                {loading ? 'Registering...' : 'Register'}
+              </Text>
+            </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
