@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const AttendanceScreen = () => {
+const AttendanceScreen = (props) => {
   const [students, setStudents] = useState([
     {id: 1, name: 'Student 1', present: false, absent: false},
     {id: 2, name: 'Student 2', present: false, absent: false},
@@ -43,7 +43,7 @@ const AttendanceScreen = () => {
   return (
     <View style={styles.parentView}>
       <View style={styles.classAndsectionHeader}>
-        <Text style={styles.classAndDateHeaderText}>Class: 3A</Text>
+        <Text style={ styles.classAndDateHeaderText }>Class: { props.route.params.class_value}</Text>
         <Text style={styles.classAndDateHeaderText}>
           Date:{' '}
           {timeStamp.getDate() +

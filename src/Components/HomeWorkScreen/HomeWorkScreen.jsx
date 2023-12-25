@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-function HomeWorkScreen() {
+function HomeWorkScreen(props) {
   const [homeWork, setHomeWork] = React.useState('');
   const [subjectName, setSubjectName] = React.useState('Subject Name');
   const [className, setClassName] = React.useState('BCS-6B');
@@ -60,8 +60,12 @@ function HomeWorkScreen() {
         </View>
 
         <View style={Styles.footerView}>
-          <Text style={Styles.footerTextLeft}>{className}</Text>
-          <Text style={Styles.footerTextRight}>{classSection}</Text>
+          <Text style={Styles.footerTextLeft}>
+            {props.route.params.class_value}
+          </Text>
+          <Text style={Styles.footerTextRight}>
+            {props.route.params.class_value}
+          </Text>
         </View>
       </View>
     </KeyboardAvoidingView>

@@ -119,7 +119,7 @@ const TeacherDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('Attendence')}>
+                onPress={() => modalOpen('AttendanceScreen')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/Attendance.png')}
@@ -130,7 +130,7 @@ const TeacherDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('HOMEWORK')}>
+                onPress={() => modalOpen('HomeWorkScreen')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/Homework.png')}
@@ -141,7 +141,7 @@ const TeacherDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('RESULT')}>
+                onPress={() => modalOpen('ResultScreen')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/Exam.png')}
@@ -159,7 +159,9 @@ const TeacherDashboard = props => {
               <Text style={myStyle.Text}>Exam Routine</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={() => props.navigation.navigate('SolutionsScreen')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/IdeaSharing.png')}
@@ -168,7 +170,11 @@ const TeacherDashboard = props => {
               <Text style={myStyle.Text}>Solution</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={() =>
+                  props.navigation.navigate('NoticeAndEventsScreen')
+                }>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/Questions.png')}
@@ -177,7 +183,7 @@ const TeacherDashboard = props => {
               <Text style={myStyle.Text}>Notice & Events</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => props.navigation.navigate('addStudent')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../Assests/Images/AddUserMale.png')}

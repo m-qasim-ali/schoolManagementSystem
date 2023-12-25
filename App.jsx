@@ -9,12 +9,19 @@ import TeacherDashboard from './src/Components/TeacherDashboard/TeacherDashboard
 import AddStudent from './src/Components/AddStudent/AddStudent';
 import MyDrawer from './src/Components/myDrawer/myDrawer';
 import ResultDescription from './src/Components/resultDescription/result_description';
+import { StyleSheet ,Image,View,Text} from 'react-native';
+import HomeWorkScreen from './src/Components/HomeWorkScreen/HomeWorkScreen';
+import ResultScreen from './src/Components/ResultScreen/ResultScreen';
+import AttendanceScreen from './src/Components/AttendanceScreen/AttendanceScreen';
+import AddMarksScreen from './src/Components/AddMarksScreen/AddMarksScreen';
+import NoticeAndEvent from './src/Components/NoticeAttendence/NoticeAndEvents';
+import SolutionsScreen from './src/Components/SolutionScreen/SolutionsScreen';
 const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={'#28C2A0'} />
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="TeacherDashboard">
         <Stack.Screen
           name="Main"
           component={Main}
@@ -69,9 +76,8 @@ function App() {
           component={ResultDescription}
           options={{
             headerShown: false,
-           }}
+          }}
         />
-
 
         <Stack.Screen
           name="HomeWorkScreen"
@@ -80,7 +86,7 @@ function App() {
             title: 'Home Screen',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./assets/images/homeIcon.png')} />
+                <Image source={require('./src/Assests/Images/homeIcon.png')} />
               </View>
             ),
             headerStyle: {
@@ -101,7 +107,7 @@ function App() {
             title: 'RESULT',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./assets/images/Exam.png')} />
+                <Image source={require('./src/Assests/Images/ExamW.png')} />
               </View>
             ),
             headerStyle: {
@@ -123,7 +129,7 @@ function App() {
             title: 'ATTENDANCE',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./assets/images/Exam.png')} />
+                <Image source={require('./src/Assests/Images/ExamW.png')} />
               </View>
             ),
             headerStyle: {
@@ -144,7 +150,7 @@ function App() {
             title: 'ADD MARKS',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./assets/images/Exam.png')} />
+                <Image source={require('./src/Assests/Images//Exam.png')} />
               </View>
             ),
             headerStyle: {
@@ -166,7 +172,9 @@ function App() {
             title: 'NOTICE AND EVENTS',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./assets/images/Questions.png')} />
+                <Image
+                  source={require('./src/Assests/Images/QuestionsW.png')}
+                />
               </View>
             ),
             headerStyle: {
@@ -187,7 +195,9 @@ function App() {
             title: 'SOLUTIONS',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./assets/images/solutions.png')} />
+                <Image
+                  source={require('./src/Assests/Images//solutions.png')}
+                />
               </View>
             ),
             headerStyle: {
@@ -199,7 +209,13 @@ function App() {
               fontWeight: 'bold',
               color: 'white',
             },
-
+          }}
+        />
+        <Stack.Screen
+          name="addStudent"
+          component={AddStudent}
+          options={{
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
