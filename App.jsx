@@ -8,7 +8,7 @@ import SignUp from './src/Components/SignUp/SignUp';
 import TeacherDashboard from './src/Components/TeacherDashboard/TeacherDashboard';
 import AddStudent from './src/Components/AddStudent/AddStudent';
 import MyDrawer from './src/Components/myDrawer/myDrawer';
-import ResultDescription from './src/Components/resultDescription/result_description';
+import ResultDescription from './src/Components/StudentResult/studentResult';
 import { StyleSheet ,Image,View,Text} from 'react-native';
 import HomeWorkScreen from './src/Components/HomeWorkScreen/HomeWorkScreen';
 import ResultScreen from './src/Components/ResultScreen/ResultScreen';
@@ -19,6 +19,7 @@ import SolutionsScreen from './src/Components/SolutionScreen/SolutionsScreen';
 import AskQuestion from './src/Components/AskQuestions/ask_questions';
 import QuestionList from './src/Components/QuestionList/questionList';
 import AnswerScreen from './src/Components/AnswerScreen/answerScreen';
+import StudentRESULT from './src/Components/StudentResult/studentResult';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -78,7 +79,7 @@ function App() {
 
         <Stack.Screen
           name="StudentRESULT"
-          component={ResultDescription}
+          component={StudentRESULT}
           options={{
             title: 'Result Screen',
             headerLeft: () => (
