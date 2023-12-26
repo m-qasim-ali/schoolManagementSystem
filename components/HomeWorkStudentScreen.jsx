@@ -40,7 +40,7 @@ const HomeWorkStudentScreen = () => {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>{myState.questionDetails}</Text>
+          <Text style={styles.cardTextStyle}>{myState.questionDetails}</Text>
         </View>
 
         <View style={{alignItems: 'center'}}>
@@ -78,10 +78,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  cardTitle: {
+  cardTextStyle: {
     fontSize: 14,
     fontWeight: '100',
     color: 'black',
+    textAlign: 'justify',
   },
   answerDisplayCard: {
     borderWidth: 1,
