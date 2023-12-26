@@ -17,6 +17,8 @@ import AddMarksScreen from './src/Components/AddMarksScreen/AddMarksScreen';
 import NoticeAndEvent from './src/Components/NoticeAttendence/NoticeAndEvents';
 import SolutionsScreen from './src/Components/SolutionScreen/SolutionsScreen';
 import AskQuestion from './src/Components/AskQuestions/ask_questions';
+import QuestionList from './src/Components/QuestionList/questionList';
+import AnswerScreen from './src/Components/AnswerScreen/answerScreen';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -180,7 +182,71 @@ function App() {
             },
           }}
         />
+        <Stack.Screen
+          name="QuestionList"
+          component={QuestionList}
+          options={{
+            title: 'Question List',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./src/Assests/Images//ExamW.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
 
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AnswerScreen"
+          component={AnswerScreen}
+          options={{
+            title: 'Answer Of Question',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./src/Assests/Images/ExamW.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AskQuestion"
+          component={AskQuestion}
+          options={{
+            title: 'Ask Question',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image
+                  source={require('./src/Assests/Images/QuestionsW.png')}
+                />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
         <Stack.Screen
           name="NoticeAndEventsScreen"
           component={NoticeAndEvent}
@@ -230,13 +296,6 @@ function App() {
         <Stack.Screen
           name="addStudent"
           component={AddStudent}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="askQuestion"
-          component={AskQuestion}
           options={{
             headerShown: false,
           }}
