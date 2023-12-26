@@ -16,12 +16,12 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ResultStudentScreen">
+      <Stack.Navigator initialRouteName="HomeWorkScreen">
         <Stack.Screen
           name="HomeWorkScreen"
           component={HomeWorkScreen}
           options={{
-            title: 'Home Screen',
+            title: 'HOMEWORK',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
                 <Image source={require('./assets/images/homeIcon.png')} />
