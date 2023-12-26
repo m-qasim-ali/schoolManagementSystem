@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const AddMarksScreen = () => {
+const AddMarksScreen = props => {
   const [students, setStudents] = useState([
     {id: 1, name: 'Student 1', marks: ''},
     {id: 2, name: 'Student 2', marks: ''},
@@ -30,11 +30,12 @@ const AddMarksScreen = () => {
   };
 
   const timeStamp = new Date(Date.now());
-
+  const {class_value} = props.route.params;
+  const {terminal} = props.route.params;
   return (
     <View style={styles.parentView}>
       <View style={styles.classAndsectionHeader}>
-        <Text style={styles.classAndDateHeaderText}>Class: 3A</Text>
+        <Text style={styles.classAndDateHeaderText}>Class: {class_value}</Text>
         <Text style={styles.classAndDateHeaderText}>
           Date:{' '}
           {timeStamp.getDate() +
@@ -45,7 +46,29 @@ const AddMarksScreen = () => {
         </Text>
       </View>
 
-      <View style={{marginBottom: 10, flexDirection: 'row-reverse'}}>
+      <View
+        style={{
+          marginBottom: 10,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <View
+          style={{
+            opacity: 0.7,
+            left: 13,
+            borderRadius: 5,
+          }}
+          onPress={() => {
+            console.log('Submit Button');
+          }}>
+          <Text
+            style={[
+              styles.stdNameAndMarksText,
+              {textAlign: 'center', color: '#0C46C4'},
+            ]}>
+            {terminal}
+          </Text>
+        </View>
         <TouchableOpacity
           style={{
             backgroundColor: '#0C46C4',

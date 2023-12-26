@@ -11,7 +11,7 @@ import MyDrawer from './src/Components/myDrawer/myDrawer';
 import ResultDescription from './src/Components/StudentResult/studentResult';
 import { StyleSheet ,Image,View,Text} from 'react-native';
 import HomeWorkScreen from './src/Components/HomeWorkScreen/HomeWorkScreen';
-import ResultScreen from './src/Components/ResultScreen/ResultScreen';
+
 import AttendanceScreen from './src/Components/AttendanceScreen/AttendanceScreen';
 import AddMarksScreen from './src/Components/AddMarksScreen/AddMarksScreen';
 import NoticeAndEvent from './src/Components/NoticeAttendence/NoticeAndEvents';
@@ -119,27 +119,6 @@ function App() {
             },
           }}
         />
-        <Stack.Screen
-          name="ResultScreen"
-          component={ResultScreen}
-          options={{
-            title: 'RESULT',
-            headerLeft: () => (
-              <View style={Styles.headerLeftContainer}>
-                <Image source={require('./src/Assests/Images/ExamW.png')} />
-              </View>
-            ),
-            headerStyle: {
-              backgroundColor: '#0C46C4',
-            },
-
-            headerTitleStyle: {
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          }}
-        />
 
         <Stack.Screen
           name="AttendanceScreen"
@@ -169,7 +148,7 @@ function App() {
             title: 'ADD MARKS',
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
-                <Image source={require('./src/Assests/Images//Exam.png')} />
+                <Image source={require('./src/Assests/Images/ExamW.png')} />
               </View>
             ),
             headerStyle: {
