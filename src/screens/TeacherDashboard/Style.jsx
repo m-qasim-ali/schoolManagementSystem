@@ -98,7 +98,7 @@ const myStyle = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 25,
-    gap: 10,
+    gap: 50,
 
     shadowColor: '#000',
     shadowOffset: {

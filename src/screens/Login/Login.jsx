@@ -31,6 +31,8 @@ const Login = props => {
         let data = null;
         if (props.route.params.role === 'guest') {
           data = await Auth.signInGuest(email, password);
+        } else if (props.route.params.role === 'student') {
+          data = await Auth.signInStudent(email, password);
         } else {
           data = await Auth.signInTeacher(email, password);
         }

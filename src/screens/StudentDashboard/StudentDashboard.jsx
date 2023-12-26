@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import myStyle from './Style';
 import {
   View,
@@ -13,11 +13,16 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {selectUser, setUser} from '../../store/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {Auth} from '../../services';
 
 const StudentDashboard = props => {
+  const dispatch = useDispatch();
   const [uri, setUri] = useState('icon');
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
+  const data = useSelector(selectUser);
   const [message, setMessage] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et do',
   );
@@ -38,6 +43,27 @@ const StudentDashboard = props => {
   const modalDown = () => {
     setModalVisible(!modalVisible);
   };
+
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Logout',
+        onPress: async () => {
+          try {
+            await Auth.signOut();
+            dispatch(setUser(null));
+          } catch (err) {
+            Alert.alert('Error', err.message);
+          }
+        },
+      },
+    ]);
+  };
+
+  useEffect(() => {
+    setUri(data.imageUrl);
+  }, []);
 
   const navigateTo = () => {
     console.log(_screen);
@@ -173,6 +199,14 @@ const StudentDashboard = props => {
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Notice & Events</Text>
+            </View>
+            <View style={myStyle.box}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={handleLogout}>
+                <Icon name="exit" size={50} color="#0C46C4" />
+              </TouchableOpacity>
+              <Text style={myStyle.Text}>Logout</Text>
             </View>
           </View>
         </View>

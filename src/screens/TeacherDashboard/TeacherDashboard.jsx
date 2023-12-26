@@ -13,9 +13,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectUser, setUser} from '../../store/userSlice';
+import {Auth} from '../../services';
 
 const TeacherDashboard = props => {
-  const [uri, setUri] = useState('icon');
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
   const [data, setData] = useState({
@@ -26,36 +29,48 @@ const TeacherDashboard = props => {
   const [message, setMessage] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et do',
   );
+  const user = useSelector(selectUser);
 
   const [open, setOpen] = useState(false);
-  const [classValue, setClassValue] = useState(null);
+  const [course, setCourse] = useState(null);
   const [items, setItems] = useState([
-    {label: '1A', value: '1A'},
-    {label: '1B', value: '1B'},
-    {label: '2A', value: '2A'},
-    {label: '2B', value: '2B'},
-    {label: '3A', value: '3A'},
-    {label: '3B', value: '3B'},
-    {label: '4A', value: '4A'},
-    {label: '4B', value: '4B'},
-    {label: '5A', value: '5A'},
-    {label: '5B', value: '5B'},
+    {label: 'Mathematics', value: 'Math'},
+    {label: 'English', value: 'English'},
+    {label: 'Science', value: 'Science'},
+    {label: 'History', value: 'History'},
+    {label: 'Computer Science', value: 'CS'},
   ]);
 
   const modalDown = () => {
     setModalVisible(!modalVisible);
   };
 
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Logout',
+        onPress: async () => {
+          try {
+            await Auth.signOut();
+            dispatch(setUser(null));
+          } catch (err) {
+            Alert.alert('Error', err.message);
+          }
+        },
+      },
+    ]);
+  };
+
   const navigateTo = () => {
     console.log(_screen);
-    props.navigation.navigate(
-      {_screen},
-      {
-        classValue: data.class,
-        sectionValue: data.section,
-        subjectValue: data.subject,
+    props.navigation.navigate({
+      name: _screen,
+      params: {
+        course_value: course,
+        user: user,
       },
-    );
+    });
   };
 
   const modalOpen = screen => {
@@ -79,12 +94,12 @@ const TeacherDashboard = props => {
               <View style={myStyle.modalView}>
                 <DropDownPicker
                   open={open}
-                  value={classValue}
+                  value={course}
                   items={items}
                   setOpen={setOpen}
-                  setValue={setClassValue}
+                  setValue={setCourse}
                   setItems={setItems}
-                  placeholder={'Class'}
+                  placeholder={'Course'}
                 />
                 <TouchableOpacity
                   style={[myStyle.button, myStyle.buttonClose]}
@@ -125,7 +140,9 @@ const TeacherDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('Attendence')}>
+                onPress={() =>
+                  props.navigation.navigate('TeacherAttendance', {user})
+                }>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Attendance.png')}
@@ -136,7 +153,7 @@ const TeacherDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('HOMEWORK')}>
+                onPress={() => modalOpen('HomeWorkTeacher')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Homework.png')}
@@ -147,7 +164,7 @@ const TeacherDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('RESULT')}>
+                onPress={() => modalOpen('AddMarks')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Exam.png')}
@@ -165,7 +182,11 @@ const TeacherDashboard = props => {
               <Text style={myStyle.Text}>Exam Routine</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={() => {
+                  props.navigation.navigate('SolutionsTeacher');
+                }}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/IdeaSharing.png')}
@@ -174,7 +195,11 @@ const TeacherDashboard = props => {
               <Text style={myStyle.Text}>Solution</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={() => {
+                  props.navigation.navigate('NoticeAndEvents');
+                }}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Questions.png')}
@@ -194,6 +219,14 @@ const TeacherDashboard = props => {
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Add Account</Text>
+            </View>
+            <View style={myStyle.box}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={handleLogout}>
+                <Icon name="exit" size={50} color="#0C46C4" />
+              </TouchableOpacity>
+              <Text style={myStyle.Text}>Logout</Text>
             </View>
           </View>
         </View>

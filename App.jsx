@@ -9,12 +9,12 @@ import {AddStudent, StudentDashboard} from './src/screens';
 function App() {
   return (
     <>
-      {/* <Provider store={store}>
+      <Provider store={store}>
         <PaperProvider>
           <AppContainer />
         </PaperProvider>
-      </Provider> */}
-      <StudentDashboard />
+      </Provider>
+      {/* <StudentDashboard /> */}
     </>
   );
 }

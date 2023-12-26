@@ -214,11 +214,8 @@ const signInGuest = async (email, password) => {
 };
 
 const signInStudent = async (email, password) => {
-  if (!email || !password) {
-    Alert.alert('Error', 'Please enter all fields');
-  }
-
   try {
+    console.log('sudent...');
     const res = await auth().signInWithEmailAndPassword(email, password);
 
     const userUid = res.user.uid;
@@ -228,7 +225,7 @@ const signInStudent = async (email, password) => {
     if (!(userDoc.exists && userDoc.data().role == 'student')) {
       throw error('Invalid credientials');
     }
-
+    console.log(userDoc.data());
     return userDoc.data();
   } catch (err) {
     throw err;
@@ -325,6 +322,8 @@ async function sendEmail(to, subject, text) {
   }
 }
 
+
+
 const Auth = {
   registerGuest,
   registerTeacher,
@@ -335,6 +334,7 @@ const Auth = {
   signOut,
   getAllClasses,
   registerStudent,
+  
 };
 
 export default Auth;
