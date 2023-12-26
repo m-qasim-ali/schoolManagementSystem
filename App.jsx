@@ -10,13 +10,14 @@ import NoticeAndEvent from './components/NoticeAndEvents';
 import SolutionsScreen from './components/SolutionsScreen';
 import HomeWorkStudentScreen from './components/HomeWorkStudentScreen';
 import ResultStudentScreen from './components/RseultStudentScreen';
+import ExamRoutineScreen from './components/ExamRoutineTeacher';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeWorkScreen">
+      <Stack.Navigator initialRouteName="ExamRoutineScreen">
         <Stack.Screen
           name="HomeWorkScreen"
           component={HomeWorkScreen}
@@ -174,6 +175,27 @@ function App() {
             headerLeft: () => (
               <View style={Styles.headerLeftContainer}>
                 <Image source={require('./assets/images/homeIcon.png')} />
+              </View>
+            ),
+            headerStyle: {
+              backgroundColor: '#0C46C4',
+            },
+
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="ExamRoutineScreen"
+          component={ExamRoutineScreen}
+          options={{
+            title: 'EXAM ROUTINE',
+            headerLeft: () => (
+              <View style={Styles.headerLeftContainer}>
+                <Image source={require('./assets/images/Attendance.png')} />
               </View>
             ),
             headerStyle: {
