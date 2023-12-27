@@ -12,32 +12,19 @@ import {DBFunctions} from '../../services';
 import Loader from '../../components/Loader';
 import {getFormattedDate} from '../../utils/getFormattedDate';
 
-const AttendanceScreen = props => {
-  const [students, setStudents] = useState([]);
+const StudentAttendance = props => {
+  const [attendances, setAttendances] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
 
-  const {cls, uid} = props.route.params.user;
+  const {cls, uid, fullName} = props.route.params.user;
 
   useEffect(() => {
-    const getStudents = async () => {
+    const getAttendance = async () => {
       try {
-        const savedAttendance = await DBFunctions.getAttendanceForClassAndDate(
-          cls,
+        const savedAttendance = await DBFunctions.getStudentAttendanceByUid(
+          uid,
         );
-
-        if (savedAttendance[0].students.length == 0) {
-          const data = await DBFunctions.getStudentsByClass(cls);
-          const res = data.map(std => ({
-            id: std.uid,
-            name: std.fullName,
-            present: false,
-            absent: false,
-          }));
-          setStudents(res);
-        } else {
-          setStudents(savedAttendance[0].students);
-        }
+        setAttendances(savedAttendance);
       } catch (err) {
         Alert.alert('Error', err.message);
       } finally {
@@ -45,23 +32,8 @@ const AttendanceScreen = props => {
       }
     };
 
-    getStudents();
+    getAttendance();
   }, []);
-
-  const handleToggleAttendance = (studentId, attendanceType) => {
-    setStudents(prevStudents =>
-      prevStudents.map(student => {
-        if (student.id === studentId) {
-          return {
-            ...student,
-            [attendanceType]: !student[attendanceType],
-            [attendanceType === 'present' ? 'absent' : 'present']: false,
-          };
-        }
-        return student;
-      }),
-    );
-  };
 
   if (loading) {
     return <Loader />;
@@ -81,38 +53,13 @@ const AttendanceScreen = props => {
   return (
     <View style={styles.parentView}>
       <View style={styles.classAndsectionHeader}>
-        <Text style={styles.classAndDateHeaderText}>
-          Class: {props.route.params.user.cls}
-        </Text>
-        <Text style={styles.classAndDateHeaderText}>
-          Date: {getFormattedDate()}
-        </Text>
-      </View>
-
-      <View style={{marginBottom: 10, flexDirection: 'row-reverse'}}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#0C46C4',
-            opacity: 0.7,
-            width: '30%',
-            borderRadius: 5,
-            marginRight: 30,
-          }}
-          disabled={saving}
-          onPress={submitAttendance}>
-          <Text style={[styles.stdNameAndMarksText, {textAlign: 'center'}]}>
-            {saving ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              'Submit'
-            )}
-          </Text>
-        </TouchableOpacity>
+        <Text style={styles.classAndDateHeaderText}>Class: {cls}</Text>
+        <Text style={styles.classAndDateHeaderText}>Name: {fullName}</Text>
       </View>
 
       <View style={styles.attendanceSectionView}>
         <View style={styles.studentNameView}>
-          <Text style={[styles.subBarText, {marginLeft: 6}]}>Student Name</Text>
+          <Text style={[styles.subBarText, {marginLeft: 6}]}>Date</Text>
         </View>
         <View style={styles.presentAndAbsentView}>
           <Text style={styles.subBarText}>Present</Text>
@@ -122,29 +69,29 @@ const AttendanceScreen = props => {
 
       <ScrollView>
         <View>
-          {students.map(student => (
-            <View key={student.id} style={styles.studentRow}>
+          {attendances.map(attendance => (
+            <View key={attendance.id} style={styles.studentRow}>
               <View style={styles.studentNameView}>
-                <Text style={styles.studentNameText}>{student.name}</Text>
+                <Text style={styles.studentNameText}>{attendance.date}</Text>
               </View>
               <View style={styles.presentAndAbsentView}>
                 <TouchableOpacity
+                  disabled={true}
                   style={[
                     styles.checkbox,
-                    student.present
+                    attendance.present
                       ? styles.presentSelectedCheckbox
                       : styles.checkbox,
                   ]}
-                  onPress={() => handleToggleAttendance(student.id, 'present')}
                 />
                 <TouchableOpacity
+                  disabled={true}
                   style={[
                     styles.checkbox,
-                    student.absent
+                    attendance.absent
                       ? styles.absentSelectedCheckbox
                       : styles.checkbox,
                   ]}
-                  onPress={() => handleToggleAttendance(student.id, 'absent')}
                 />
               </View>
             </View>
@@ -224,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AttendanceScreen;
+export default StudentAttendance;

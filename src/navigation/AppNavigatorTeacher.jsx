@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {
   AddMarks,
   AddStudent,
+  ExamRoutineTeacher,
   Home,
   HomeWorkTeacher,
   NoticeAndEvents,
@@ -53,6 +54,28 @@ export default AppNavigatorTeacher = () => (
       component={AddMarks}
       options={{
         title: 'ADD MARKS',
+        headerLeft: () => (
+          <View style={Styles.headerLeftContainer}>
+            <Image source={require('../../Assests/images/ExamW.png')} />
+          </View>
+        ),
+        headerStyle: {
+          backgroundColor: '#0C46C4',
+        },
+        headerShown: true,
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: 'bold',
+          color: 'white',
+        },
+      }}
+    />
+
+    <Stack.Screen
+      name="ExamRoutineTeacher"
+      component={ExamRoutineTeacher}
+      options={{
+        title: 'Exam Routine',
         headerLeft: () => (
           <View style={Styles.headerLeftContainer}>
             <Image source={require('../../Assests/images/ExamW.png')} />

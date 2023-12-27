@@ -113,6 +113,7 @@ const SignUp = props => {
                 <TextInput
                   style={myStyle.Textinput}
                   placeholder="xyz@gmail.com"
+                  keyboardType="email-address"
                   onChangeText={text => setEmail(text)}></TextInput>
                 <Icon name="envelope" size={25} color="#0C46C4" />
               </View>
@@ -149,14 +150,14 @@ const SignUp = props => {
               />
             </View>
           )}
-            <TouchableOpacity
-              disabled={loading}
-              style={myStyle.touchable1}
-              onPress={handleSubmit}>
-              <Text style={myStyle.touchable1Text}>
-                {loading ? 'Registering...' : 'Register'}
-              </Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            disabled={loading}
+            style={myStyle.touchable1}
+            onPress={handleSubmit}>
+            <Text style={myStyle.touchable1Text}>
+              {loading ? 'Registering...' : 'Register'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

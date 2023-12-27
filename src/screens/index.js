@@ -14,4 +14,10 @@ export {default as HomeWorkTeacher} from './HomeWork/HomeWorkScreen';
 export {default as HomeWorkStudent} from './HomeWorkStudent/HomeWorkStudentScreen';
 export {default as ResultStudent} from './ResultStudent/ResultStudentScreen';
 export {default as SolutionsTeacher} from './SolutionsTeacher/SolutionsScreen';
-
+export {default as StudentAttendance} from './StudentAttendance/StudentAttendance';
+export {default as StudentNoticeEvents} from './StudentNoticeEvents/StudentNoticeEvents';
+export {default as ViewNotice} from './ViewNotice/ViewNotice';
+export {default as HomeWorkList} from './HomeWorkList/HomeWorkList';
+export {default as ViewAssignment} from './ViewAssignment/ViewAssignment';
+export {default as ExamRoutineTeacher} from './ExamRoutineTeacher/ExamRoutineTeacher';
+export {default as ExamRoutineStudent} from './ExamRoutineStudent/ExamRoutineStudent';

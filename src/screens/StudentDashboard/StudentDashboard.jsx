@@ -22,12 +22,12 @@ const StudentDashboard = props => {
   const [uri, setUri] = useState('icon');
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
-  const data = useSelector(selectUser);
+  const user = useSelector(selectUser);
   const [message, setMessage] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et do',
   );
   const [open, setOpen] = useState(false);
-  const [classValue, setClassValue] = useState(null);
+  const [course, setCourse] = useState('');
   const [items, setItems] = useState([
     {label: 'Mathematics', value: 'Math'},
     {label: 'English', value: 'English'},
@@ -40,6 +40,15 @@ const StudentDashboard = props => {
     {label: 'Literature', value: 'Literature'},
     {label: 'Geography', value: 'Geography'},
   ]);
+
+  const [term, setTerm] = useState('');
+  const [openTerminal, setOpenTerminal] = useState(false);
+  const [itemsTerm, setItemsTerm] = useState([
+    {label: 'First Terminal', value: 'First Terminal'},
+    {label: 'Second Terminal', value: 'Second Terminal'},
+    {label: 'Final Terminal', value: 'Final Terminal'},
+  ]);
+
   const modalDown = () => {
     setModalVisible(!modalVisible);
   };
@@ -62,17 +71,28 @@ const StudentDashboard = props => {
   };
 
   useEffect(() => {
-    setUri(data.imageUrl);
+    setUri(user.imageUrl);
   }, []);
 
   const navigateTo = () => {
-    console.log(_screen);
-    props.navigation.navigate({
-      name: _screen,
-      params: {
-        class_value: classValue,
-      },
-    });
+    if (_screen === 'AddMarks') {
+      props.navigation.navigate({
+        name: _screen,
+        params: {
+          course,
+          user,
+          terminal: term,
+        },
+      });
+    } else {
+      props.navigation.navigate({
+        name: _screen,
+        params: {
+          course,
+          user,
+        },
+      });
+    }
   };
 
   const modalOpen = screen => {
@@ -94,16 +114,46 @@ const StudentDashboard = props => {
           <View style={myStyle.centeredView}>
             <TouchableWithoutFeedback>
               <View style={myStyle.modalView}>
-                <DropDownPicker
-                  open={open}
-                  value={classValue}
-                  items={items}
-                  setOpen={setOpen}
-                  setValue={setClassValue}
-                  setItems={setItems}
-                  placeholder={'Course'}
-                />
+                {_screen === 'AddMarks' ? (
+                  <>
+                    <DropDownPicker
+                      open={open}
+                      value={course}
+                      items={items}
+                      setOpen={setOpen}
+                      setValue={setCourse}
+                      setItems={setItems}
+                      placeholder={'Course'}
+                      zIndex={1000}
+                    />
+                    <DropDownPicker
+                      open={openTerminal}
+                      value={term}
+                      items={itemsTerm}
+                      setOpen={setOpenTerminal}
+                      setValue={setTerm}
+                      setItems={setItemsTerm}
+                      placeholder={'Terminals'}
+                      zIndex={500}
+                    />
+                  </>
+                ) : (
+                  <DropDownPicker
+                    open={open}
+                    value={course}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setCourse}
+                    setItems={setItems}
+                    placeholder={'Course'}
+                  />
+                )}
                 <TouchableOpacity
+                  disabled={
+                    _screen == 'AddMarks'
+                      ? course.length == 0 || term.length == 0
+                      : course.length == 0
+                  }
                   style={[myStyle.button, myStyle.buttonClose]}
                   onPress={() => {
                     modalDown();
@@ -143,7 +193,9 @@ const StudentDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('Attendence')}>
+                onPress={() =>
+                  props.navigation.navigate('StudentAttendance', {user})
+                }>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Attendance.png')}
@@ -154,7 +206,7 @@ const StudentDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('HOMEWORK')}>
+                onPress={() => modalOpen('HomeWorkList')}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Homework.png')}
@@ -165,7 +217,9 @@ const StudentDashboard = props => {
             <View style={myStyle.box}>
               <TouchableOpacity
                 style={myStyle.View2_2_1}
-                onPress={() => modalOpen('StudentRESULT')}>
+                onPress={() =>
+                  props.navigation.navigate('ResultStudent', {user})
+                }>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Exam.png')}
@@ -174,7 +228,13 @@ const StudentDashboard = props => {
               <Text style={myStyle.Text}>Result</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={() =>
+                  props.navigation.navigate('ExamRoutineStudent', {
+                    cls: user.cls,
+                  })
+                }>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/TodoList.png')}
@@ -192,7 +252,11 @@ const StudentDashboard = props => {
               <Text style={myStyle.Text}>Solution</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity
+                style={myStyle.View2_2_1}
+                onPress={() => {
+                  props.navigation.navigate('StudentNoticeEvents', {user});
+                }}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/Questions.png')}

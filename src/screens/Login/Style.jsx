@@ -32,6 +32,8 @@ const myStyle = StyleSheet.create({
   View2: {
     flex: 1,
     width: '100%',
+    gap: 20,
+    bottom: 20,
   },
   View2_1: {
     flex: 1,
@@ -56,7 +58,6 @@ const myStyle = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
     gap: 15,
-    marginTop: 10,
   },
   touchable1: {
     width: '100%',

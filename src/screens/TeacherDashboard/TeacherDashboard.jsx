@@ -21,24 +21,27 @@ const TeacherDashboard = props => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [_screen, setScreen] = useState('');
-  const [data, setData] = useState({
-    class: '',
-    section: '',
-    subject: '',
-  });
   const [message, setMessage] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et do',
   );
   const user = useSelector(selectUser);
 
   const [open, setOpen] = useState(false);
-  const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState('');
   const [items, setItems] = useState([
     {label: 'Mathematics', value: 'Math'},
     {label: 'English', value: 'English'},
     {label: 'Science', value: 'Science'},
     {label: 'History', value: 'History'},
     {label: 'Computer Science', value: 'CS'},
+  ]);
+
+  const [term, setTerm] = useState('');
+  const [openTerminal, setOpenTerminal] = useState(false);
+  const [itemsTerm, setItemsTerm] = useState([
+    {label: 'First Terminal', value: 'First Terminal'},
+    {label: 'Second Terminal', value: 'Second Terminal'},
+    {label: 'Final Terminal', value: 'Final Terminal'},
   ]);
 
   const modalDown = () => {
@@ -63,14 +66,24 @@ const TeacherDashboard = props => {
   };
 
   const navigateTo = () => {
-    console.log(_screen);
-    props.navigation.navigate({
-      name: _screen,
-      params: {
-        course_value: course,
-        user: user,
-      },
-    });
+    if (_screen === 'AddMarks') {
+      props.navigation.navigate({
+        name: _screen,
+        params: {
+          course,
+          user,
+          terminal: term,
+        },
+      });
+    } else {
+      props.navigation.navigate({
+        name: _screen,
+        params: {
+          course,
+          user,
+        },
+      });
+    }
   };
 
   const modalOpen = screen => {
@@ -92,16 +105,46 @@ const TeacherDashboard = props => {
           <View style={myStyle.centeredView}>
             <TouchableWithoutFeedback>
               <View style={myStyle.modalView}>
-                <DropDownPicker
-                  open={open}
-                  value={course}
-                  items={items}
-                  setOpen={setOpen}
-                  setValue={setCourse}
-                  setItems={setItems}
-                  placeholder={'Course'}
-                />
+                {_screen === 'AddMarks' ? (
+                  <>
+                    <DropDownPicker
+                      open={open}
+                      value={course}
+                      items={items}
+                      setOpen={setOpen}
+                      setValue={setCourse}
+                      setItems={setItems}
+                      placeholder={'Course'}
+                      zIndex={1000}
+                    />
+                    <DropDownPicker
+                      open={openTerminal}
+                      value={term}
+                      items={itemsTerm}
+                      setOpen={setOpenTerminal}
+                      setValue={setTerm}
+                      setItems={setItemsTerm}
+                      placeholder={'Terminals'}
+                      zIndex={500}
+                    />
+                  </>
+                ) : (
+                  <DropDownPicker
+                    open={open}
+                    value={course}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setCourse}
+                    setItems={setItems}
+                    placeholder={'Course'}
+                  />
+                )}
                 <TouchableOpacity
+                  disabled={
+                    _screen == 'AddMarks'
+                      ? course.length == 0 || term.length == 0
+                      : course.length == 0
+                  }
                   style={[myStyle.button, myStyle.buttonClose]}
                   onPress={() => {
                     modalDown();
@@ -173,7 +216,7 @@ const TeacherDashboard = props => {
               <Text style={myStyle.Text}>Result</Text>
             </View>
             <View style={myStyle.box}>
-              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
+              <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {props.navigation.navigate('ExamRoutineTeacher', {cls: user.cls})}}>
                 <Image
                   style={myStyle.Image2_2_1}
                   source={require('../../../Assests/images/TodoList.png')}
@@ -198,7 +241,9 @@ const TeacherDashboard = props => {
               <TouchableOpacity
                 style={myStyle.View2_2_1}
                 onPress={() => {
-                  props.navigation.navigate('NoticeAndEvents');
+                  props.navigation.navigate('NoticeAndEvents', {
+                    cls: user.cls,
+                  });
                 }}>
                 <Image
                   style={myStyle.Image2_2_1}

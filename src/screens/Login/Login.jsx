@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Auth} from '../../services';
@@ -48,23 +49,24 @@ const Login = props => {
   };
 
   return (
-    <View style={myStyle.mainView}>
-      <View style={myStyle.View1}>
-        <View style={myStyle.View1_1}>
-          <Image
-            style={myStyle.Image}
-            source={require('./../../../Assests/images/MainLogo.png')}
-          />
+    <ScrollView style={{flexGrow: 1}}>
+      <View style={myStyle.mainView}>
+        <View style={myStyle.View1}>
+          <View style={myStyle.View1_1}>
+            <Image
+              style={myStyle.Image}
+              source={require('../../../Assests/images/MainLogo.png')}
+            />
+          </View>
         </View>
-      </View>
-      <View style={myStyle.View2}>
-        <ScrollView>
+        <View style={myStyle.View2}>
           <View style={myStyle.View2_1}>
             <View>
               <Text>Enter Email</Text>
               <View style={myStyle.View2_1_1}>
                 <TextInput
                   style={myStyle.Textinput}
+                  keyboardType="email-address"
                   placeholder="...@xyz.com"
                   onChangeText={text => setEmail(text)}></TextInput>
                 <Icon name="user" size={30} color="#0C46C4" />
@@ -86,18 +88,20 @@ const Login = props => {
                 />
               </View>
             </View>
-            <View>
-              <TouchableOpacity
-                disabled={loading}
-                style={myStyle.touchable1}
-                onPress={submit}>
-                <Text style={myStyle.touchable1Text}>
-                  {loading ? 'Loging...' : 'Login'}
-                </Text>
-              </TouchableOpacity>
-            </View>
           </View>
           <View style={myStyle.View2_2}>
+            <TouchableOpacity
+              disabled={loading}
+              onPress={submit}
+              style={myStyle.touchable1}>
+              <Text style={myStyle.touchable1Text}>
+                {!loading ? (
+                  'Login'
+                ) : (
+                  <ActivityIndicator size={'small'} color={'#fff'} />
+                )}
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('ForgetPassword')}>
               <Text style={myStyle.touchable2_1Text}>Forget Password</Text>
@@ -110,7 +114,7 @@ const Login = props => {
                 <TouchableOpacity
                   onPress={() =>
                     props.navigation.navigate('SignUp', {
-                      role: props.route.params.role,
+                      role,
                     })
                   }>
                   <Text style={myStyle.touchable2_2Text}>SignUp</Text>
@@ -120,9 +124,9 @@ const Login = props => {
               <></>
             )}
           </View>
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

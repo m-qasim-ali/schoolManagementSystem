@@ -9,16 +9,21 @@ import {
   Platform,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {DBFunctions} from '../../services';
 
-const NoticeAndEvent = () => {
-  const [noticeDetails, setNoticeDetails] = React.useState({
-    noticeTitle: 'Terminal Date Sheet',
-    noticeDetail:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique justo eget risus auctor, nec tristique nunc varius',
-    selectedImage: null,
-  });
+const initialState = {
+  noticeTitle: '',
+  noticeDetail: '',
+  selectedImage: null,
+};
+
+const NoticeAndEvent = props => {
+  const [noticeDetails, setNoticeDetails] = React.useState(initialState);
+  const [loading, setLoading] = React.useState(false);
 
   const selectImage = async () => {
     try {
@@ -33,6 +38,26 @@ const NoticeAndEvent = () => {
       }
     } catch (error) {
       console.error('Error selecting image:', error);
+    }
+  };
+
+
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      await DBFunctions.saveNoticeWithImage(
+        noticeDetails.noticeTitle,
+        noticeDetails.noticeDetail,
+        props.route.params.cls,
+        noticeDetails.selectedImage,
+      );
+      setNoticeDetails(initialState);
+      Alert.alert('Success', 'Notice uploaded successfully!');
+    } catch (err) {
+      Alert.alert(err.code, err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +79,7 @@ const NoticeAndEvent = () => {
               }));
             }}
             multiline={true}
+            placeholder="Terminal Date Sheet"
             value={noticeDetails.noticeTitle}
           />
           <Text style={styles.screenText}>Enter Details</Text>
@@ -66,6 +92,7 @@ const NoticeAndEvent = () => {
                 noticeDetail: text,
               }));
             }}
+            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique justo eget risus auctor, nec tristique nunc varius"
             value={noticeDetails.noticeDetail}
           />
 
@@ -89,10 +116,15 @@ const NoticeAndEvent = () => {
         <View style={styles.bottomMostView}>
           <TouchableOpacity
             style={styles.sendButtonOpacity}
-            onPress={() => {
-              console.log('Send Clicked');
-            }}>
-            <Text style={styles.sendButtonText}>Send</Text>
+            disabled={loading}
+            onPress={handleSubmit}>
+            <Text style={styles.sendButtonText}>
+              {!loading ? (
+                'Send'
+              ) : (
+                <ActivityIndicator size="small" color="#fff" />
+              )}
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
