@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,20 +6,21 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
+import {DBFunctions} from '../../services';
+import Loader from '../../components/Loader';
+import {getFormattedDate} from '../../utils/getFormattedDate';
+import NoData from '../../components/NoData';
 
 const AddMarksScreen = props => {
-  const [students, setStudents] = useState([
-    {id: 1, name: 'Student 1', marks: ''},
-    {id: 2, name: 'Student 2', marks: ''},
-    {id: 3, name: 'Student 3', marks: ''},
-    {id: 4, name: 'Student 4', marks: ''},
-    {id: 5, name: 'Student 5', marks: ''},
-    {id: 6, name: 'Student 6', marks: ''},
-    {id: 7, name: 'Student 7', marks: ''},
-    {id: 8, name: 'Student 8', marks: ''},
-    {id: 9, name: 'Student 9', marks: ''},
-  ]);
+  const [loading, setLoading] = useState(true);
+  const [students, setStudents] = useState([]);
+  const [totalMarks, setTotalMarks] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const {cls, uid} = props.route.params.user;
 
   const handleMarksChange = (studentId, marks) => {
     setStudents(prevStudents =>
@@ -29,7 +30,54 @@ const AddMarksScreen = props => {
     );
   };
 
-  const timeStamp = new Date(Date.now());
+  useEffect(() => {
+    const getStudents = async () => {
+      try {
+        const data = await DBFunctions.getStudentsByClass(cls);
+        const res = data.map(std => ({
+          id: std.uid,
+          name: std.fullName,
+          marks: '',
+        }));
+        setStudents(res);
+      } catch (err) {
+        Alert.alert('Error', err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getStudents();
+  }, []);
+
+  const handleSubmit = async () => {
+    const data = {
+      totalMarks,
+      cls,
+      course: props.route.params.course,
+      terminal: props.route.params.terminal,
+      date: getFormattedDate(),
+      students,
+    };
+
+    try {
+      setSaving(true);
+      await DBFunctions.saveStudentMarks(data);
+      Alert.alert('Success', 'Marks Uploaded');
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (students.length == 0) {
+    return <NoData title="No student registered!" />;
+  }
 
   return (
     <View style={styles.parentView}>
@@ -38,16 +86,20 @@ const AddMarksScreen = props => {
           Class: {props.route.params.user.cls}
         </Text>
         <Text style={styles.classAndDateHeaderText}>
-          Date:{' '}
-          {timeStamp.getDate() +
-            '/' +
-            timeStamp.getMonth() +
-            '/' +
-            timeStamp.getFullYear()}
+          Date: {getFormattedDate()}
         </Text>
       </View>
 
-      <View style={{marginBottom: 10, flexDirection: 'row-reverse'}}>
+      <View
+        style={{
+          marginBottom: 10,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Text style={{marginLeft: 30, color: '#0C46C4'}}>
+          {props.route.params.terminal}
+        </Text>
         <TouchableOpacity
           style={{
             backgroundColor: '#0C46C4',
@@ -56,11 +108,14 @@ const AddMarksScreen = props => {
             borderRadius: 5,
             marginRight: 30,
           }}
-          onPress={() => {
-            console.log('Submit Button');
-          }}>
+          disabled={saving}
+          onPress={handleSubmit}>
           <Text style={[styles.stdNameAndMarksText, {textAlign: 'center'}]}>
-            Submit
+            {!saving ? (
+              'Submit'
+            ) : (
+              <ActivityIndicator size="small" color="#fff" />
+            )}
           </Text>
         </TouchableOpacity>
       </View>
@@ -77,12 +132,22 @@ const AddMarksScreen = props => {
       </View>
       <ScrollView style={{marginBottom: 20}}>
         <View>
+          <View style={styles.studentRow}>
+            <Text style={[styles.studentName, {color: '#0C46C4'}]}>
+              Total Marks
+            </Text>
+            <TextInput
+              style={[styles.marksInput, {borderColor: '#0C46C4'}]}
+              keyboardType="numeric"
+              value={totalMarks}
+              onChangeText={setTotalMarks}
+            />
+          </View>
           {students.map(student => (
             <View key={student.id} style={styles.studentRow}>
               <Text style={styles.studentName}>{student.name}</Text>
               <TextInput
                 style={styles.marksInput}
-                placeholder="Enter Marks"
                 keyboardType="numeric"
                 value={student.marks}
                 onChangeText={marks => handleMarksChange(student.id, marks)}
@@ -139,11 +204,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   marksInput: {
-    width: '30%',
+    width: '20%',
     borderWidth: 1,
-    padding: 8,
-    marginRight: 15,
-    borderRadius: 5,
+    padding: 2,
+    marginRight: 25,
+    borderRadius: 3,
   },
 });
 

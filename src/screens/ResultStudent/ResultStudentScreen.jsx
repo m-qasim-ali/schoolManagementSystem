@@ -1,130 +1,104 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
+import {DBFunctions} from '../../services';
+import Loader from '../../components/Loader';
+import NoData from '../../components/NoData';
 
-const ResultStudentScreen = () => {
-  const [myState, setMyState] = React.useState({
-    terminalFirst: [
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '40', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '40', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '40', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '40', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-    ],
+const ResultStudentScreen = props => {
+  const [myState, setMyState] = React.useState(null);
+  const [loading, setLoading] = useState(false);
 
-    terminalSecond: [
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '10', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '10', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '10', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-      {course: 'Science', marks: '10', totalMarks: '100'},
-      {course: 'Maths', marks: '10', totalMarks: '100'},
-      {course: 'English', marks: '50', totalMarks: '100'},
-    ],
-    disableView: false,
-    disableView2: false,
-  });
+  const {uid} = props.route.params.user;
 
-  const onViewPress = () => {
-    setMyState(prevState => ({
-      ...prevState,
-      disableView: !prevState.disableView,
-    }));
-  };
+  const transformedData = inputData =>
+    inputData.reduce((result, item) => {
+      const terminalKey = item.terminal;
 
-  const onViewPressSecond = () => {
-    setMyState(prevState => ({
-      ...prevState,
-      disableView2: !prevState.disableView2,
-    }));
-  };
+      if (!result[terminalKey]) {
+        result[terminalKey] = {
+          isDisable: true,
+          res: [],
+        };
+      }
+
+      result[terminalKey].res.push({
+        course: item.course,
+        marks: item.marks,
+        totalMarks: item.totalMarks,
+      });
+
+      return result;
+    }, {});
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const res = await DBFunctions.getStudentMarks(uid);
+        if (res != null) {
+          let filteredData = transformedData(res);
+          setMyState(filteredData);
+        }
+      } catch (err) {
+        Alert.alert('Error', err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (myState == null) {
+    return <NoData title={'No Result uploaded yet!'} />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.parentView}>
         <View style={styles.cardHoldingView}>
-          <View style={styles.card}>
-            <View>
-              <Text style={[styles.cardTitleText, {marginBottom: 5}]}>
-                First Terminal
-              </Text>
+          {myState != null &&
+            Object.entries(myState).map(([key, value], index) => (
+              <View key={index} style={styles.card}>
+                <View>
+                  <Text style={[styles.cardTitleText, {marginBottom: 5}]}>
+                    {key}
+                  </Text>
 
-              {myState.disableView ? (
-                <Text>View is Disabled</Text>
-              ) : (
-                <View style={styles.customTable}>
-                  <View style={styles.tableRow}>
-                    <Text style={styles.tableHeader}>Course Name</Text>
-                    <Text style={styles.tableHeader}>Marks</Text>
-                    <Text style={styles.tableHeader}>Total Marks</Text>
-                  </View>
-                  {myState.terminalFirst.map((course, index) => (
-                    <View key={index} style={styles.tableRow}>
-                      <Text style={styles.tableData}>{course.course}</Text>
-                      <Text style={styles.tableData}>{course.marks}</Text>
-                      <Text style={styles.tableData}>{course.totalMarks}</Text>
+                  {!myState[key].isDisable ? (
+                    <Text>View is Disabled</Text>
+                  ) : (
+                    <View style={styles.customTable}>
+                      <View style={styles.tableRow}>
+                        <Text style={styles.tableHeader}>Course Name</Text>
+                        <Text style={styles.tableHeader}>Marks</Text>
+                        <Text style={styles.tableHeader}>Total Marks</Text>
+                      </View>
+                      {myState[key].res.map((course, index) => (
+                        <View key={index} style={styles.tableRow}>
+                          <Text style={styles.tableData}>{course.course}</Text>
+                          <Text style={styles.tableData}>{course.marks}</Text>
+                          <Text style={styles.tableData}>
+                            {course.totalMarks}
+                          </Text>
+                        </View>
+                      ))}
                     </View>
-                  ))}
+                  )}
                 </View>
-              )}
-            </View>
-
-            <TouchableOpacity
-              style={styles.viewResultOpacity}
-              onPress={onViewPress}>
-              <Text style={styles.viewOpacityText}>View</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.card}>
-            <View>
-              <Text style={[styles.cardTitleText, {marginBottom: 5}]}>
-                Second Terminal
-              </Text>
-
-              {myState.disableView2 ? (
-                <Text>View is Disabled</Text>
-              ) : (
-                <View style={styles.customTable}>
-                  <View style={styles.tableRow}>
-                    <Text style={styles.tableHeader}>Course Name</Text>
-                    <Text style={styles.tableHeader}>Marks</Text>
-                    <Text style={styles.tableHeader}>Total Marks</Text>
-                  </View>
-                  {myState.terminalSecond.map((course, index) => (
-                    <View key={index} style={styles.tableRow}>
-                      <Text style={styles.tableData}>{course.course}</Text>
-                      <Text style={styles.tableData}>{course.marks}</Text>
-                      <Text style={styles.tableData}>{course.totalMarks}</Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-            </View>
-
-            <TouchableOpacity
-              style={styles.viewResultOpacity}
-              onPress={onViewPressSecond}>
-              <Text style={styles.viewOpacityText}>View</Text>
-            </TouchableOpacity>
-          </View>
+              </View>
+            ))}
         </View>
       </View>
     </ScrollView>

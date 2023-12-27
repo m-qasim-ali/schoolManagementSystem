@@ -113,6 +113,7 @@ const SignUp = props => {
                 <TextInput
                   style={myStyle.Textinput}
                   placeholder="xyz@gmail.com"
+                  keyboardType="email-address"
                   onChangeText={text => setEmail(text)}></TextInput>
                 <Icon name="envelope" size={25} color="#0C46C4" />
               </View>

@@ -3,96 +3,201 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView,
-  Platform,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-function HomeWorkScreen() {
-  const [homeWork, setHomeWork] = React.useState('');
-  const [subjectName, setSubjectName] = React.useState('Subject Name');
-  const [className, setClassName] = React.useState('BCS-6B');
-  const [classSection, setClassSection] = React.useState('BCS-6B');
+import DocumentPicker from 'react-native-document-picker';
+import {DBFunctions} from '../../services';
+import {launchImageLibrary} from 'react-native-image-picker';
+
+function HomeWorkScreen(props) {
+  const initialState = {
+    cls: props.route.params.user.cls,
+    course: props.route.params.course,
+    title: '',
+    description: '',
+    file: null,
+  };
+  const [myState, setMyState] = React.useState(initialState);
+
+  const [fileStatus, setFileStatus] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const isSubmitDisabled = () =>
+    myState.title.length === 0 ||
+    myState.description.length === 0 ||
+    fileStatus === false;
+
+  const pickDocument = async () => {
+    try {
+      let result = await launchImageLibrary({mediaType: 'photo'});
+
+      if (!result.didCancel) {
+        const uri = result.assets[0].uri;
+        setMyState(prevState => ({
+          ...prevState,
+          file: uri,
+        }));
+        setFileStatus(true);
+      }
+    } catch (error) {
+      console.error('Error selecting image:', error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      await DBFunctions.uploadAssignment(myState);
+      setMyState(initialState);
+      setFileStatus(false);
+      Alert.alert('Success', 'Assignment uploaded!');
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -150}>
-      <View style={Styles.parentView}>
-        <View style={{...Styles.questionDescriptionSection, ...Styles.card}}>
-          <Text style={Styles.questionTittle}>
-            Home Work Description Text Here
-          </Text>
-          <Text style={Styles.descriptions}>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Consectetur ducimus reprehenderit asperiores. Corporis,
-            voluptatibus. Tenetur perferendis quaerat voluptatibus, cupiditate
-            inventore quasi aperiam laudantium dolores quis praesentium tempore
-            itaque omnis reiciendis, ad repudiandae.
-          </Text>
-        </View>
+    <View>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled">
+        <View style={styles.parentView}>
+          <View style={styles.questionMaterialSection}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.subjectText}>Subject : </Text>
+              <Text style={{color: 'black'}}>{myState.cls}</Text>
+            </View>
 
-        <View style={Styles.questionMaterialSection}>
-          <Text style={Styles.subjectText}>{subjectName}</Text>
+            <View>
+              <Text style={styles.course}>Question Title</Text>
+              <TextInput
+                multiline={true}
+                style={styles.homeWorkInputField}
+                onChangeText={text => {
+                  setMyState(prevState => ({
+                    ...prevState,
+                    title: text,
+                  }));
+                }}
+                placeholder="Some Random Question"
+                value={myState.title}
+              />
+            </View>
 
-          <View>
-            <Text>Add Homework</Text>
+            <View>
+              <Text style={styles.subjectText}>Enter Details</Text>
+              <TextInput
+                multiline={true}
+                style={styles.detailsInputField}
+                onChangeText={text => {
+                  setMyState(prevState => ({
+                    ...prevState,
+                    description: text,
+                  }));
+                }}
+                placeholder="Explain Question According to Your Title"
+                value={myState.description}
+              />
+            </View>
 
-            <TextInput
-              style={Styles.homeWorkInputFiled}
-              onChangeText={setHomeWork}
-            />
+            <View style={{gap: 10}}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <TouchableOpacity
+                  style={styles.uploadFileButton}
+                  onPress={pickDocument}>
+                  <Text style={styles.submitText}>Upload File</Text>
+                </TouchableOpacity>
+                {fileStatus === true && myState.file !== null ? (
+                  <View
+                    style={{
+                      backgroundColor: 'green',
+                      borderRadius: 100,
+                      height: 30,
+                      width: 30,
+                    }}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      backgroundColor: 'red',
+                      borderRadius: 100,
+                      height: 30,
+                      width: 30,
+                    }}
+                  />
+                )}
+              </View>
+
+              <View style={{marginVertical: 20}}>
+                <TouchableOpacity
+                  style={[
+                    styles.submitButton,
+                    {
+                      backgroundColor: isSubmitDisabled()
+                        ? '#A9A9A9'
+                        : '#0C46C4',
+                    },
+                  ]}
+                  onPress={handleSubmit}
+                  disabled={isSubmitDisabled() || loading}>
+                  <Text style={styles.submitText}>
+                    {!loading ? (
+                      'Submit'
+                    ) : (
+                      <ActivityIndicator size={'small'} color={'#fff'} />
+                    )}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-
-          <TouchableOpacity
-            style={Styles.submitButtonOpacity}
-            onPress={() => {
-              console.log(homeWork);
-            }}>
-            <Text style={Styles.submitText}>Submit</Text>
-          </TouchableOpacity>
         </View>
-
-        <View style={Styles.footerView}>
-          <Text style={Styles.footerTextLeft}>{className}</Text>
-          <Text style={Styles.footerTextRight}>{classSection}</Text>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+      </ScrollView>
+    </View>
   );
 }
-const Styles = StyleSheet.create({
-  parentView: {
-    flex: 1,
-  },
 
-  questionDescriptionSection: {
-    justifyContent: 'center',
-    width: '85%',
-    alignSelf: 'center',
-    marginVertical: 20,
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    paddingBottom: 100,
+  },
+  parentView: {
+    marginTop: 30,
   },
   questionMaterialSection: {
-    flex: 3,
-    gap: 40,
-    width: '85%',
+    gap: 20,
+    width: '90%',
     alignSelf: 'center',
-  },
-  questionTittle: {
-    fontWeight: '900',
-    fontSize: 15,
-    color: 'gray',
   },
   subjectText: {
     color: '#0C46C4',
     fontWeight: '900',
   },
-  submitButtonOpacity: {
+  homeWorkInputField: {
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderColor: '#0C46C4',
+  },
+  detailsInputField: {
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderColor: '#0C46C4',
+    textAlignVertical: 'top',
+    height: 200,
+  },
+  submitButton: {
     alignSelf: 'center',
-    backgroundColor: '#0C46C4',
-    width: '100%',
+    width: '90%',
     padding: 15,
     borderRadius: 10,
   },
@@ -100,45 +205,17 @@ const Styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  homeWorkInputFiled: {
-    height: 50,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderColor: '#0C46C4',
-    borderRadius: 5,
+
+  footerText: {
+    color: 'white',
+    fontWeight: '900',
   },
-  fileStatuesText: {
-    textAlign: 'center',
-  },
-  footerView: {
+  uploadFileButton: {
     backgroundColor: '#0C46C4',
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  footerTextLeft: {
-    color: 'white',
-    fontWeight: '900',
-  },
-
-  footerTextRight: {
-    color: 'white',
-    fontWeight: '900',
-  },
-
-  card: {
-    borderWidth: 1,
-    borderColor: '#D3D3D3',
+    width: '30%',
+    padding: 5,
     borderRadius: 10,
-    padding: 10,
-    backgroundColor: 'white',
-    elevation: 3,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
 });
+
 export default HomeWorkScreen;
