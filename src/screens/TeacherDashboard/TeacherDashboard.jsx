@@ -119,7 +119,7 @@ const TeacherDashboard = props => {
         <View style={myStyle.View1_1}>
           <Image
             style={myStyle.Image}
-            source={require('../../../Assests/images/teacher.jpeg')}
+            source={require('../../../Assests/Images/teacher.jpeg')}
           />
         </View>
       </View>
@@ -145,7 +145,7 @@ const TeacherDashboard = props => {
                 }>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Attendance.png')}
+                  source={require('../../../Assests/Images/Attendance.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Attendece</Text>
@@ -156,7 +156,7 @@ const TeacherDashboard = props => {
                 onPress={() => modalOpen('HomeWorkTeacher')}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Homework.png')}
+                  source={require('../../../Assests/Images/Homework.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Homework</Text>
@@ -167,7 +167,7 @@ const TeacherDashboard = props => {
                 onPress={() => modalOpen('AddMarks')}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Exam.png')}
+                  source={require('../../../Assests/Images/Exam.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Result</Text>
@@ -176,7 +176,7 @@ const TeacherDashboard = props => {
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/TodoList.png')}
+                  source={require('../../../Assests/Images/TodoList.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Exam Routine</Text>
@@ -189,7 +189,7 @@ const TeacherDashboard = props => {
                 }}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/IdeaSharing.png')}
+                  source={require('../../../Assests/Images/IdeaSharing.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Solution</Text>
@@ -202,7 +202,7 @@ const TeacherDashboard = props => {
                 }}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Questions.png')}
+                  source={require('../../../Assests/Images/Questions.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Notice & Events</Text>
@@ -215,7 +215,7 @@ const TeacherDashboard = props => {
                 }}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/AddUserMale.png')}
+                  source={require('../../../Assests/Images/AddUserMale.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Add Account</Text>

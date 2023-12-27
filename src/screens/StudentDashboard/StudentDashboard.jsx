@@ -146,7 +146,7 @@ const StudentDashboard = props => {
                 onPress={() => modalOpen('Attendence')}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Attendance.png')}
+                  source={require('../../../Assests/Images/Attendance.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Attendece</Text>
@@ -157,7 +157,7 @@ const StudentDashboard = props => {
                 onPress={() => modalOpen('HOMEWORK')}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Homework.png')}
+                  source={require('../../../Assests/Images/Homework.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Homework</Text>
@@ -168,7 +168,7 @@ const StudentDashboard = props => {
                 onPress={() => modalOpen('StudentRESULT')}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Exam.png')}
+                  source={require('../../../Assests/Images/Exam.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Result</Text>
@@ -177,7 +177,7 @@ const StudentDashboard = props => {
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/TodoList.png')}
+                  source={require('../../../Assests/Images/TodoList.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Exam Routine</Text>
@@ -186,7 +186,7 @@ const StudentDashboard = props => {
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/IdeaSharing.png')}
+                  source={require('../../../Assests/Images/IdeaSharing.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Solution</Text>
@@ -195,7 +195,7 @@ const StudentDashboard = props => {
               <TouchableOpacity style={myStyle.View2_2_1} onPress={() => {}}>
                 <Image
                   style={myStyle.Image2_2_1}
-                  source={require('../../../Assests/images/Questions.png')}
+                  source={require('../../../Assests/Images/Questions.png')}
                 />
               </TouchableOpacity>
               <Text style={myStyle.Text}>Notice & Events</Text>

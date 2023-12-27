@@ -76,7 +76,7 @@ const SignUp = props => {
         <View style={myStyle.View1_1}>
           <Image
             style={myStyle.Image}
-            source={require('./../../../Assests/images/MainLogo.png')}
+            source={require('../../../Assests/Images/MainLogo.png')}
           />
         </View>
       </View>
@@ -149,14 +149,14 @@ const SignUp = props => {
               />
             </View>
           )}
-            <TouchableOpacity
-              disabled={loading}
-              style={myStyle.touchable1}
-              onPress={handleSubmit}>
-              <Text style={myStyle.touchable1Text}>
-                {loading ? 'Registering...' : 'Register'}
-              </Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            disabled={loading}
+            style={myStyle.touchable1}
+            onPress={handleSubmit}>
+            <Text style={myStyle.touchable1Text}>
+              {loading ? 'Registering...' : 'Register'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

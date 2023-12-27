@@ -22,7 +22,7 @@ const Main = () => {
         <View style={myStyle.View1_1}></View>
       </View>
       <View style={myStyle.View2}>
-        <Image source={require('./../../../Assests/images/MainLogo.png')} />
+        <Image source={require('../../../Assests/Images/MainLogo.png')} />
       </View>
       <View style={myStyle.View3}>
         <Text style={myStyle.Text}>Powered By Comsats</Text>

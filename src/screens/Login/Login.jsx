@@ -53,7 +53,7 @@ const Login = props => {
         <View style={myStyle.View1_1}>
           <Image
             style={myStyle.Image}
-            source={require('./../../../Assests/images/MainLogo.png')}
+            source={require('../../../Assests/Images/MainLogo.png')}
           />
         </View>
       </View>

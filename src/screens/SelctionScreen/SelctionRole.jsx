@@ -7,7 +7,7 @@ const SelctionRole = props => {
         <View style={myStyle.View1_1}>
           <Image
             style={myStyle.Image}
-            source={require('./../../../Assests/images/MainLogo.png')}
+            source={require('../../../Assests/Images/MainLogo.png')}
           />
         </View>
       </View>
@@ -21,7 +21,7 @@ const SelctionRole = props => {
             }>
             <View style={myStyle.touchView}>
               <Image
-                source={require('./../../../Assests/images/StudentMale.png')}
+                source={require('../../../Assests/Images/StudentMale.png')}
               />
             </View>
             <Text style={myStyle.touchText}>Student</Text>
@@ -33,7 +33,7 @@ const SelctionRole = props => {
             }>
             <View style={myStyle.touchView}>
               <Image
-                source={require('./../../../Assests/images/Tuition.png')}
+                source={require('../../../Assests/Images/Tuition.png')}
               />
             </View>
             <Text style={myStyle.touchText}>Teacher</Text>
@@ -42,7 +42,7 @@ const SelctionRole = props => {
             style={myStyle.touchable1}
             onPress={() => props.navigation.navigate('Login', {role: 'guest'})}>
             <View style={myStyle.touchView}>
-              <Image source={require('./../../../Assests/images/Person.png')} />
+              <Image source={require('../../../Assests/Images/Person.png')} />
             </View>
             <Text style={myStyle.touchText}>Guest</Text>
           </TouchableOpacity>

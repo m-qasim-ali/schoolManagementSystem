@@ -33,7 +33,7 @@ export default AppNavigatorTeacher = () => (
         title: 'ATTENDANCE',
         headerLeft: () => (
           <View style={Styles.headerLeftContainer}>
-            <Image source={require('../../Assests/images/ExamW.png')} />
+            {/* <Image source={require('../../Assests/Images/ExamW.png')} /> */}
           </View>
         ),
         headerShown: true,
@@ -55,7 +55,7 @@ export default AppNavigatorTeacher = () => (
         title: 'ADD MARKS',
         headerLeft: () => (
           <View style={Styles.headerLeftContainer}>
-            <Image source={require('../../Assests/images/ExamW.png')} />
+            {/* <Image source={require('../../Assests/images/ExamW.png')} /> */}
           </View>
         ),
         headerStyle: {
@@ -84,7 +84,7 @@ export default AppNavigatorTeacher = () => (
         title: 'NOTICE AND EVENTS',
         headerLeft: () => (
           <View style={Styles.headerLeftContainer}>
-            <Image source={require('../../Assests/images/QuestionsW.png')} />
+            {/* <Image source={require('../../Assests/images/QuestionsW.png')} /> */}
           </View>
         ),
         headerStyle: {
@@ -106,7 +106,7 @@ export default AppNavigatorTeacher = () => (
         title: 'SOLUTIONS',
         headerLeft: () => (
           <View style={Styles.headerLeftContainer}>
-            <Image source={require('../../Assests/images/solutions.png')} />
+            {/* <Image source={require('../../Assests/images/solutions.png')} /> */}
           </View>
         ),
         headerStyle: {
@@ -128,7 +128,7 @@ export default AppNavigatorTeacher = () => (
         title: 'Home Screen',
         headerLeft: () => (
           <View style={Styles.headerLeftContainer}>
-            <Image source={require('../../Assests/images/homeIcon.png')} />
+            {/* <Image source={require('../../Assests/images/homeIcon.png')} /> */}
           </View>
         ),
         headerStyle: {
