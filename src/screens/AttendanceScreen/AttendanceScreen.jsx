@@ -11,9 +11,10 @@ import {
 import {DBFunctions} from '../../services';
 import Loader from '../../components/Loader';
 import {getFormattedDate} from '../../utils/getFormattedDate';
+import NoData from '../../components/NoData';
 
 const AttendanceScreen = props => {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -26,15 +27,19 @@ const AttendanceScreen = props => {
           cls,
         );
 
-        if (savedAttendance[0].students.length == 0) {
+        if (savedAttendance.length == 0) {
           const data = await DBFunctions.getStudentsByClass(cls);
-          const res = data.map(std => ({
-            id: std.uid,
-            name: std.fullName,
-            present: false,
-            absent: false,
-          }));
-          setStudents(res);
+          if (data.length == 0) {
+            setStudents(null);
+          } else {
+            const res = data.map(std => ({
+              id: std.uid,
+              name: std.fullName,
+              present: false,
+              absent: false,
+            }));
+            setStudents(res);
+          }
         } else {
           setStudents(savedAttendance[0].students);
         }
@@ -65,6 +70,10 @@ const AttendanceScreen = props => {
 
   if (loading) {
     return <Loader />;
+  }
+
+  if (students == null) {
+    return <NoData title={'No Student Found!'} />;
   }
 
   const submitAttendance = async () => {
